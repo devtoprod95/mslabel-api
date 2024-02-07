@@ -34,8 +34,8 @@ class ApiLogServiceProvider extends ServiceProvider
             $endPoint = parse_url($fullUrl, PHP_URL_PATH);
 
             ApiLog::updateOrCreate(
-                ['endpoint' => $request->fullUrl()],
-                ['count' => DB::raw('count + 1')]
+                ['endpoint' => $endPoint],
+                ['count'    => DB::raw('count + 1')]
             );
 
             // 응답 내용을 JSON 디코딩
