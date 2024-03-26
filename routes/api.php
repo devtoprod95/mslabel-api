@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SolutionController;
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::name('v1.')->prefix('v1')->group(function () {
+    // 0.3초 이내에 최대 1번까지 호출
     Route::middleware(['jwt.verify','rateLimit'])->group(function () {
         // 3초 이내에 최대 1번까지 호출
         Route::post('/token/create', [AuthController::class, 'tokenCreate'])->name('token.create');
 
-        // 0.3초 이내에 최대 1번까지 호출
-        Route::post('/product/list', [ProductController::class, 'list'])->name('product.list');
+        Route::get('/main', [MainController::class, 'list'])->name('main.list');
     });
-
-    Route::post('/how-to-lose-weight', [SolutionController::class, 'solutionDiet'])->name('solution.diet');
 });

@@ -56,22 +56,15 @@
                 }
             }
         },
-        "/api/v1/product/list": {
-            "post": {
+        "/api/v1/main": {
+            "get": {
                 "tags": [
-                    "상품"
+                    "메인"
                 ],
-                "summary": "상품 리스트",
-                "operationId": "1fea6b2d8ad1a2668a844a8c0a03bac3",
+                "summary": "메인 페이지 데이터",
+                "operationId": "a3ce580263fb3a308cad67ed9c770c4f",
                 "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProductListSchema"
-                            }
-                        }
-                    }
+                    "required": false
                 },
                 "responses": {
                     "200": {
@@ -333,33 +326,6 @@
                     "expires_at": {
                         "type": "string",
                         "example": "2023-12-19 18:45:50"
-                    }
-                },
-                "type": "object"
-            },
-            "ProductListSchema": {
-                "required": [
-                    "page",
-                    "pageSize",
-                    "orderBy",
-                    "direction"
-                ],
-                "properties": {
-                    "page": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "pageSize": {
-                        "type": "string",
-                        "example": 40
-                    },
-                    "orderBy": {
-                        "type": "string",
-                        "example": "prd_name"
-                    },
-                    "direction": {
-                        "type": "string",
-                        "example": "desc"
                     }
                 },
                 "type": "object"

@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Repositories\ProductRepository;
 use App\Repositories\UserRepository;
-use App\Services\ProductService;
 use App\Services\UserService;
+use App\Services\MainService;
+use App\Services\v1\MainV1;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
 
@@ -22,8 +22,10 @@ class AppServiceProvider extends ServiceProvider
             return new UserService($app->make(UserRepository::class));
         });
 
-        $this->app->singleton(ProductService::class, function ($app) {
-            return new ProductService($app->make(ProductRepository::class));
+        $this->app->bind(MainService::class, function ($app) {
+            $mainAbstract = $app->make(MainV1::class);
+
+            return new MainService($mainAbstract);
         });
     }
 
