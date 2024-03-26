@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatApiLogsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreatApiLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('api_logs', function (Blueprint $table) {
+        Schema::create('api_detail_logs', function (Blueprint $table) {
             $table->id();
             $table->string('endpoint');
-            $table->integer('count')->default(0);
+            $table->string('method');
+            $table->text('request')->nullable();
+            $table->text('response')->nullable();
+            $table->string('ip');
             $table->timestamps();
         });
     }
@@ -30,4 +33,4 @@ class CreatApiLogsTable extends Migration
     {
         //
     }
-}
+};

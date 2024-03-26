@@ -179,7 +179,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\ApiLogServiceProvider::class,
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
         SolutionServiceProvider::class,
     ],
