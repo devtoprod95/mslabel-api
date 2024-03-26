@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Annotations\v1\mslabel\bProduct;
+namespace App\Annotations\v1\mslabel\bMain;
 
 /**
  * 
@@ -12,23 +12,13 @@ namespace App\Annotations\v1\mslabel\bProduct;
  *      bearerFormat="JWT"
  * )
  * 
- * @OA\Schema(
- *     schema="ProductListSchema",
- *     required={"page", "pageSize", "orderBy", "direction"},
- *     @OA\Property(property="page", type="integer", example=1),
- *     @OA\Property(property="pageSize", type="string", example=40),
- *     @OA\Property(property="orderBy", type="string", example="prd_name"),
- *     @OA\Property(property="direction", type="string", example="desc")
- * )
- *
- * @OA\Post(
- *     path="/api/v1/product/list",
- *     summary="상품 리스트",
- *     tags={"상품"},
+ * @OA\Get(
+ *     path="/api/v1/main",
+ *     summary="메인 페이지 데이터",
+ *     tags={"메인"},
  *     security={{"BearerAuth": {}}},
  *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(ref="#/components/schemas/ProductListSchema")
+ *         required=false,
  *     ),
  *     @OA\Response(
  *         response=200,
@@ -53,6 +43,5 @@ namespace App\Annotations\v1\mslabel\bProduct;
  * )
 */
 
-
-class ListAnnotataion{
+class MainAnnotataion{
 }

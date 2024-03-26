@@ -16,7 +16,6 @@ return new class extends Migration
     {
         Schema::create('main_sub_titles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('title_id')->nullable(false)->comment('main_titles id');
             $table->string('sub_title_type', 20)->nullable(false)->comment('서브 타이들 분류');
             $table->string('title', 50)->nullable(false)->comment('제목');
             $table->unsignedInteger('rank')->default(1)->nullable(false)->comment('노출 순서');
@@ -24,7 +23,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('title_id')->references('id')->on('main_titles')->onDelete('cascade');
             $table->index('sub_title_type');
             $table->index('rank');
         });
