@@ -16,11 +16,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::name('v1.')->prefix('v1')->group(function () {
-    // 0.3초 이내에 최대 1번까지 호출
-    Route::middleware(['jwt.verify','rateLimit'])->group(function () {
-        // 3초 이내에 최대 1번까지 호출
+    Route::middleware(['jwt.verify'])->group(function () {
         Route::post('/token/create', [AuthController::class, 'tokenCreate'])->name('token.create');
-
+        
         Route::get('/main', [MainController::class, 'list'])->name('main.list');
+
+        /**
+         * 관리자
+         * 
+        */
+        Route::name('admin.')->prefix('admin')->group(function () {
+            
+
+        });
+
+
     });
 });
