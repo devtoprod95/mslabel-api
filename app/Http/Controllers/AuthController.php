@@ -38,7 +38,7 @@ class AuthController extends Controller
             }
     
             $credentials = $this->request->only(["name", "password"]);
-            $user = User::where('name', $credentials['name'])->first();
+            $user        = User::where('name', $credentials['name'])->first();
             if (!$user) {
                 return helpers_json_response(HttpConstant::BAD_REQUEST, [], "없는 아이디입니다.");
             }
@@ -60,12 +60,12 @@ class AuthController extends Controller
      */
     private function createToken(User $user): array
     {
-        $expirationTime = time() + 3600;      // 1시간 후 만료
+        $expirationTime = time() + 7200;      // 2시간 후 만료
         $data           = ["user" => $user];
         $payload        = [
             'iss' => Route::currentRouteName(), // 발행자
             'iat' => time(), // 발행 시간
-            'exp' => $expirationTime, // 만료 시간 (1시간 후)
+            'exp' => $expirationTime, // 만료 시간
             'sub' => $data // 사용자 정의 데이터
         ];
 
