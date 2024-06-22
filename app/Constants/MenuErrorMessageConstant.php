@@ -2,7 +2,7 @@
 
 namespace App\Constants;
 
-class UserErrorMessageConstant
+class MenuErrorMessageConstant
 {
     private static $defaultMsg         = "(을)를 입력해주세요.";
     private static $defaultTypeMsg     = "의 타입형식이 올바르지 않습니다.";
@@ -10,10 +10,16 @@ class UserErrorMessageConstant
     private static $defaultNotHaveMsg  = "Empty";
     private static $defaultFitErrorMsg = "Error";
 
-    public const ERROR_MESSAGE_TOKEN    = "토큰";
-    public const ERROR_MESSAGE_USER     = "회원";
-    public const ERROR_MESSAGE_USER_ID  = "회원 아이디";
-    public const ERROR_MESSAGE_PASSWORD = "회원 비밀번호";
+    public const ERROR_MESSAGE_MAIN_MENU = "메인 메뉴";
+    public const ERROR_MESSAGE_GROUP_ID  = "메인 메뉴 id";
+    public const ERROR_MESSAGE_TITLE     = "메인 메뉴 제목";
+    public const ERROR_MESSAGE_SUB_ID    = "서브 메뉴 id";
+    public const ERROR_MESSAGE_SUB_MENU  = "서브 메뉴";
+    public const ERROR_MESSAGE_SUB_TITLE = "서브 메뉴 제목";
+    public const ERROR_MESSAGE_SUB_TYPE  = "서브 메뉴 유형";
+    public const ERROR_MESSAGE_SUB_RANK  = "서브 메뉴 순서";
+    public const ERROR_MESSAGE_PAGE      = "page";
+    public const ERROR_MESSAGE_PAGE_SIZE = "page_size";
    
     public static function getErrorMessageNotDefault($constantName): string
     {

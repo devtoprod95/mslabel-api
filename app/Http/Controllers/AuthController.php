@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Constants\HttpConstant;
+use App\Constants\UserErrorMessageConstant;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\AdminData;
 use Carbon\Carbon;
 use Exception;
 use Firebase\JWT\JWT;
@@ -26,25 +27,25 @@ class AuthController extends Controller
     {
         try {
             $validator = Validator::make($this->request->all(), [
-                'name'     => 'required',
+                'user_id'  => 'required',
                 'password' => 'required',
             ], [
-                'name.required'     => '아이디를 입력하세요.',
-                'password.required' => '비밀번호를 입력하세요.',
+                'user_id.required'  => UserErrorMessageConstant::getNotHaveErrorMessage("USER_ID"),
+                'password.required' => UserErrorMessageConstant::getNotHaveErrorMessage("PASSWORD"),
             ]);
     
             if ($validator->fails()) {
                 throw new Exception($validator->errors()->first());
             }
     
-            $credentials = $this->request->only(["name", "password"]);
-            $user = User::where('name', $credentials['name'])->first();
+            $credentials = $this->request->only(["user_id", "password"]);
+            $user        = AdminData::where('user_id', $credentials['user_id'])->first();
             if (!$user) {
-                return helpers_json_response(HttpConstant::BAD_REQUEST, [], "없는 아이디입니다.");
+                return helpers_json_response(HttpConstant::BAD_REQUEST, [], UserErrorMessageConstant::getNotHaveErrorMessage("USER"));
             }
 
             if (!Hash::check($credentials['password'], $user->password)) {
-                return helpers_json_response(HttpConstant::BAD_REQUEST, [], "비밀번호를 다시 확인해주세요.");
+                return helpers_json_response(HttpConstant::BAD_REQUEST, [], UserErrorMessageConstant::getFitErrorMessage("PASSWORD"));
             }
 
             $result = $this->createToken($user);
@@ -58,9 +59,9 @@ class AuthController extends Controller
     /**
      * 토큰 생성
      */
-    private function createToken(User $user): array
+    private function createToken(AdminData $user): array
     {
-        $expirationTime = time() + 3600;      // 1시간 후 만료
+        $expirationTime = time() + ( 3600 * 3 ); // 3시간 후 만료
         $data           = ["user" => $user];
         $payload        = [
             'iss' => Route::currentRouteName(), // 발행자

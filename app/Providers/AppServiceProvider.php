@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
-use App\Repositories\UserRepository;
-use App\Services\UserService;
+use App\Abstracts\MainAbstract;
+use App\Abstracts\MenuAbstract;
 use App\Services\MainService;
+use App\Services\MenuService;
 use App\Services\v1\MainV1;
+use App\Services\v1\MenuV1;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
 
@@ -17,15 +20,29 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {   
-        $this->app->singleton(UserService::class, function ($app) {
-            return new UserService($app->make(UserRepository::class));
-        });
+    {  
+        
+        $this->bindService(MainService::class, [
+            'v1' => MainV1::class,
+        ]);
+        $this->bindService(MenuService::class, [
+            'v1' => MenuV1::class,
+        ]);
+    }
 
-        $this->app->bind(MainService::class, function ($app) {
-            $mainAbstract = $app->make(MainV1::class);
+    protected function bindService(string $abstractClass, array $versionedClassMap): void
+    {
+        $this->app->bind($abstractClass, function ($app) use ($versionedClassMap, $abstractClass) {
+            $routeName    = Route::currentRouteName();
+            $routeParts   = explode(".", $routeName);
+            $routeVersion = $routeParts[0] ?? null;     // 'v1'을 추출
 
-            return new MainService($mainAbstract);
+            $abstract = null;
+            if (isset($versionedClassMap[$routeVersion])) {
+                $abstract = $app->make($versionedClassMap[$routeVersion]);
+            }
+
+            return new $abstractClass($abstract);
         });
     }
 

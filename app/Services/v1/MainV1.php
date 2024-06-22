@@ -82,7 +82,7 @@ class MainV1 extends MainAbstract
 
             $returnMsg = helpers_success_message($result);
         } catch (Exception $e) {
-            $returnMsg = helpers_fail_message(false, $e->getMessage());
+            $returnMsg = helpers_fail_message($e->getMessage());
         }
 
         return $returnMsg;

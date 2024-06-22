@@ -56,13 +56,476 @@
                 }
             }
         },
+        "/api/v1/menu/main": {
+            "get": {
+                "tags": [
+                    "메뉴"
+                ],
+                "summary": "대표 메뉴 리스트",
+                "description": "대표 메뉴 리스트 endPoint",
+                "operationId": "fe2c9652d910a2c0b24fd3207f1c40cb",
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/menu/main/edit/{id}": {
+            "patch": {
+                "tags": [
+                    "메뉴"
+                ],
+                "summary": "대표 메뉴 수정",
+                "description": "대표 메뉴 수정 endPoint",
+                "operationId": "8cd6e77777ed30dc56b5dec30fb87901",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "대표 메뉴 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MenuMainEditSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/menu/sub": {
+            "get": {
+                "tags": [
+                    "메뉴"
+                ],
+                "summary": "서브 메뉴 리스트",
+                "description": "서브 메뉴 리스트 endPoint",
+                "operationId": "5c5d4d45251afdc47a13c97d7d994e04",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "페이지 수",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "페이징 사이즈",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 50
+                        }
+                    },
+                    {
+                        "name": "group_id",
+                        "in": "query",
+                        "description": "메인 메뉴 검색 ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "search_cls",
+                        "in": "query",
+                        "description": "검색 분류 sub_title: 서브 메뉴 제목",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "검색어",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/menu/sub/create": {
+            "post": {
+                "tags": [
+                    "메뉴"
+                ],
+                "summary": "서브 메뉴 생성",
+                "description": "서브 메뉴 생성 endPoint",
+                "operationId": "7b3972921e4784a36c567266769038bf",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MenuSubCreateSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/menu/sub/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "메뉴"
+                ],
+                "summary": "서브 메뉴 삭제",
+                "description": "서브 메뉴 삭제 endPoint",
+                "operationId": "c7da47ec8ea37aafea0fe0849e30f4a2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "서브 메뉴 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/menu/sub/edit/{id}": {
+            "patch": {
+                "tags": [
+                    "메뉴"
+                ],
+                "summary": "서브 메뉴 수정",
+                "description": "서브 메뉴 수정 endPoint",
+                "operationId": "5f6da65dc2f4a986c75c436520a61d98",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "서브 메뉴 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MenuSubEditSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/main": {
             "get": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 페이지 데이터",
-                "operationId": "a3ce580263fb3a308cad67ed9c770c4f",
+                "operationId": "d0ffd2ecb5879ee4b4f4970f2e50cdbe",
                 "requestBody": {
                     "required": false
                 },
@@ -130,7 +593,7 @@
                                 "type": "string",
                                 "example": "2023-12-19 17:45:50"
                             },
-                            "apiVersion": {
+                            "api_version": {
                                 "type": "string",
                                 "example": "v1"
                             }
@@ -155,7 +618,7 @@
                                 "type": "string",
                                 "example": "2023-12-19 17:45:50"
                             },
-                            "apiVersion": {
+                            "api_version": {
                                 "type": "string",
                                 "example": "v1"
                             }
@@ -190,7 +653,7 @@
                                 "type": "string",
                                 "example": "2023-12-19 17:45:50"
                             },
-                            "apiVersion": {
+                            "api_version": {
                                 "type": "string",
                                 "example": "v1"
                             }
@@ -225,7 +688,7 @@
                                 "type": "string",
                                 "example": "2023-12-19 17:45:50"
                             },
-                            "apiVersion": {
+                            "api_version": {
                                 "type": "string",
                                 "example": "v1"
                             }
@@ -260,7 +723,7 @@
                                 "type": "string",
                                 "example": "2023-12-19 17:45:50"
                             },
-                            "apiVersion": {
+                            "api_version": {
                                 "type": "string",
                                 "example": "v1"
                             }
@@ -285,11 +748,11 @@
             },
             "TokenCreateSchema": {
                 "required": [
-                    "name",
+                    "user_id",
                     "password"
                 ],
                 "properties": {
-                    "name": {
+                    "user_id": {
                         "type": "string",
                         "example": "john_doe"
                     },
@@ -312,7 +775,7 @@
                                 "type": "string",
                                 "example": "2023-12-19 17:45:50"
                             },
-                            "apiVersion": {
+                            "api_version": {
                                 "type": "string",
                                 "example": "v1"
                             }
@@ -326,6 +789,78 @@
                     "expires_at": {
                         "type": "string",
                         "example": "2023-12-19 18:45:50"
+                    }
+                },
+                "type": "object"
+            },
+            "MenuMainEditSchema": {
+                "description": "대표 메뉴 수정 스키마",
+                "required": [
+                    "title"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "대표 메뉴 제목",
+                        "type": "string",
+                        "example": "한국 인쇄"
+                    }
+                },
+                "type": "object"
+            },
+            "MenuSubCreateSchema": {
+                "description": "서브 메뉴 생성 스키마",
+                "required": [
+                    "group_id",
+                    "title",
+                    "type"
+                ],
+                "properties": {
+                    "group_id": {
+                        "description": "대표 메뉴 ID",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "title": {
+                        "description": "서브 메뉴 제목",
+                        "type": "string",
+                        "example": "한국 인쇄"
+                    },
+                    "type": {
+                        "description": "서브 메뉴 유형 image: 이미지, product: 상품, board: 게시판, editor: 에디터",
+                        "type": "string",
+                        "example": "image"
+                    }
+                },
+                "type": "object"
+            },
+            "MenuSubEditSchema": {
+                "description": "서브 메뉴 수정 스키마",
+                "required": [
+                    "group_id",
+                    "title",
+                    "type",
+                    "rank"
+                ],
+                "properties": {
+                    "group_id": {
+                        "description": "대표 메뉴 ID",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "title": {
+                        "description": "서브 메뉴 제목",
+                        "type": "string",
+                        "example": "한국 인쇄"
+                    },
+                    "type": {
+                        "description": "서브 메뉴 유형 image: 이미지, product: 상품, board: 게시판, editor: 에디터",
+                        "type": "string",
+                        "example": "image"
+                    },
+                    "rank": {
+                        "description": "서브 메뉴 순서",
+                        "type": "integer",
+                        "example": 1
                     }
                 },
                 "type": "object"

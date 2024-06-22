@@ -119,10 +119,10 @@ if (!function_exists("helpers_default_message")) {
 }
 
 if (!function_exists("helpers_fail_message")) {
-    function helpers_fail_message(bool $isSuccess = false, string $message = "변경 사항이 없거나 처리가 실패하였습니다. 관리자에 문의 바랍니다.", array $data = []): array
+    function helpers_fail_message(string $message = "변경 사항이 없거나 처리가 실패하였습니다. 관리자에 문의 바랍니다.", array $data = []): array
     {
         return [
-            "isSuccess" => $isSuccess,
+            "isSuccess" => false,
             "msg"       => $message,
             "data"      => $data,
         ];
@@ -158,7 +158,7 @@ if (!function_exists("helpers_json_response")) {
             "status" => $status,
             "meta" => [
                 "timestamp"  => Carbon::now()->format('Y-m-d H:i:s'),
-                "apiVersion" => $apiVersion
+                "api_version" => $apiVersion
             ]
         ];
         if( $status == HttpConstant::OK ){
@@ -192,5 +192,20 @@ if (!function_exists("helpersGetOnlyNumbers")) {
     function helpersGetOnlyNumbers(string $string = ""): string
     {
         return preg_replace('/[^0-9]/', '', $string);
+    }
+}
+
+if (!function_exists("printQuery")) {
+    function printQuery($model)
+    {
+        $sql = $model->toSql();
+        $bindings = $model->getBindings();
+
+        foreach ($bindings as $binding) {
+            $value = is_numeric($binding) ? $binding : "'" . $binding . "'";
+            $sql = preg_replace('/\?/', $value, $sql, 1);
+        }
+
+        dd($sql);
     }
 }

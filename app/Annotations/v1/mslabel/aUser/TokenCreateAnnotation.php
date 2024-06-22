@@ -6,8 +6,8 @@ namespace App\Annotations\v1\mslabel\aUser;
  * 
  * @OA\Schema(
  *     schema="TokenCreateSchema",
- *     required={"name", "password"},
- *     @OA\Property(property="name", type="string", example="john_doe"),
+ *     required={"user_id", "password"},
+ *     @OA\Property(property="user_id", type="string", example="john_doe"),
  *     @OA\Property(property="password", type="string", example="password123")
  * )
  * @OA\Schema(
@@ -17,7 +17,7 @@ namespace App\Annotations\v1\mslabel\aUser;
  *         property="meta", 
  *         type="object",
  *         @OA\Property(property="timestamp", type="string", example="2023-12-19 17:45:50"),
- *         @OA\Property(property="apiVersion", type="string", example="v1")
+ *         @OA\Property(property="api_version", type="string", example="v1")
  *     ),
  *     @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."),
  *     @OA\Property(property="expires_at", type="string", example="2023-12-19 18:45:50")

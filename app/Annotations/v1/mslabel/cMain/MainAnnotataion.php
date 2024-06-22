@@ -1,16 +1,9 @@
 <?php
 
-namespace App\Annotations\v1\mslabel\bMain;
+namespace App\Annotations\v1\mslabel\cMain;
 
 /**
  * 
- * 
- * @OA\SecurityScheme(
- *      securityScheme="BearerAuth",
- *      type="http",
- *      scheme="bearer",
- *      bearerFormat="JWT"
- * )
  * 
  * @OA\Get(
  *     path="/api/v1/main",

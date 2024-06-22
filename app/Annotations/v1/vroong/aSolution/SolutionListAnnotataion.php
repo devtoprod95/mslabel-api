@@ -25,7 +25,7 @@ namespace App\Annotations\v1\vroong\aSolution;
  *         property="meta", 
  *         type="object",
  *         @OA\Property(property="timestamp", type="string", example="2023-12-19 17:45:50"),
- *         @OA\Property(property="apiVersion", type="string", example="v1")
+ *         @OA\Property(property="api_version", type="string", example="v1")
  *     ),
  *     @OA\Property(property="msg", type="string", example="정상 처리 되었습니다."),
  *     @OA\Property(
