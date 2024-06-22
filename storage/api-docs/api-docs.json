@@ -56,7 +56,7 @@
                 }
             }
         },
-        "/api/v1/menu/main": {
+        "/api/v1/admin/menu/main": {
             "get": {
                 "tags": [
                     "메뉴"
@@ -116,7 +116,7 @@
                 ]
             }
         },
-        "/api/v1/menu/main/edit/{id}": {
+        "/api/v1/admin/menu/main/edit/{id}": {
             "patch": {
                 "tags": [
                     "메뉴"
@@ -194,7 +194,7 @@
                 ]
             }
         },
-        "/api/v1/menu/sub": {
+        "/api/v1/admin/menu/sub": {
             "get": {
                 "tags": [
                     "메뉴"
@@ -303,7 +303,7 @@
                 ]
             }
         },
-        "/api/v1/menu/sub/create": {
+        "/api/v1/admin/menu/sub/create": {
             "post": {
                 "tags": [
                     "메뉴"
@@ -370,7 +370,7 @@
                 ]
             }
         },
-        "/api/v1/menu/sub/delete/{id}": {
+        "/api/v1/admin/menu/sub/delete/{id}": {
             "delete": {
                 "tags": [
                     "메뉴"
@@ -441,7 +441,7 @@
                 ]
             }
         },
-        "/api/v1/menu/sub/edit/{id}": {
+        "/api/v1/admin/menu/sub/edit/{id}": {
             "patch": {
                 "tags": [
                     "메뉴"

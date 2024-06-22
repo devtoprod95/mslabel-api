@@ -28,7 +28,7 @@ namespace App\Annotations\v1\mslabel\bMenu;
  * )
  * 
  * @OA\Post(
- *     path="/api/v1/menu/sub/create",
+ *     path="/api/v1/admin/menu/sub/create",
  *     summary="서브 메뉴 생성",
  *     description="서브 메뉴 생성 endPoint",
  *     tags={"메뉴"},

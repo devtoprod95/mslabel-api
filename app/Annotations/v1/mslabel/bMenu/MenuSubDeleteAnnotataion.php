@@ -5,7 +5,7 @@ namespace App\Annotations\v1\mslabel\bMenu;
 /**
  * 
  * @OA\Delete(
- *     path="/api/v1/menu/sub/delete/{id}",
+ *     path="/api/v1/admin/menu/sub/delete/{id}",
  *     summary="서브 메뉴 삭제",
  *     description="서브 메뉴 삭제 endPoint",
  *     tags={"메뉴"},

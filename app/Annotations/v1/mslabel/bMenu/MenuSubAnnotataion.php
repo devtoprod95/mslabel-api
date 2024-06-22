@@ -6,7 +6,7 @@ namespace App\Annotations\v1\mslabel\bMenu;
  * 
  * 
  * @OA\Get(
- *     path="/api/v1/menu/sub",
+ *     path="/api/v1/admin/menu/sub",
  *     summary="서브 메뉴 리스트",
  *     description="서브 메뉴 리스트 endPoint",
  *     tags={"메뉴"},

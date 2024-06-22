@@ -34,7 +34,7 @@ namespace App\Annotations\v1\mslabel\bMenu;
  * )
  * 
  * @OA\Patch(
- *     path="/api/v1/menu/sub/edit/{id}",
+ *     path="/api/v1/admin/menu/sub/edit/{id}",
  *     summary="서브 메뉴 수정",
  *     description="서브 메뉴 수정 endPoint",
  *     tags={"메뉴"},

@@ -66,7 +66,7 @@ class AuthController extends Controller
         $payload        = [
             'iss' => Route::currentRouteName(), // 발행자
             'iat' => time(), // 발행 시간
-            'exp' => $expirationTime, // 만료 시간 (1시간 후)
+            'exp' => $expirationTime, // 만료 시간
             'sub' => $data // 사용자 정의 데이터
         ];
 

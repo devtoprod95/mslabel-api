@@ -16,7 +16,7 @@ namespace App\Annotations\v1\mslabel\bMenu;
  * )
  * 
  * @OA\Patch(
- *     path="/api/v1/menu/main/edit/{id}",
+ *     path="/api/v1/admin/menu/main/edit/{id}",
  *     summary="대표 메뉴 수정",
  *     description="대표 메뉴 수정 endPoint",
  *     tags={"메뉴"},
