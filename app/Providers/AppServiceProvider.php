@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Abstracts\MainAbstract;
-use App\Abstracts\MenuAbstract;
+use App\Services\Admin\MainService as AdminMainService;
+use App\Services\Admin\MenuService as AdminMenuService;
+use App\Services\Admin\V1\MainV1 as AdminMainV1;
+use App\Services\Admin\V1\MenuV1 as AdminMenuV1;
 use App\Services\MainService;
-use App\Services\MenuService;
 use App\Services\v1\MainV1;
-use App\Services\v1\MenuV1;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
@@ -25,8 +25,13 @@ class AppServiceProvider extends ServiceProvider
         $this->bindService(MainService::class, [
             'v1' => MainV1::class,
         ]);
-        $this->bindService(MenuService::class, [
-            'v1' => MenuV1::class,
+
+        /** 관리자 의존성 */
+        $this->bindService(AdminMainService::class, [
+            'v1' => AdminMainV1::class,
+        ]);
+        $this->bindService(AdminMenuService::class, [
+            'v1' => AdminMenuV1::class,
         ]);
     }
 

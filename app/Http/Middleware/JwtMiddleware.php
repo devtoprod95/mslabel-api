@@ -28,6 +28,8 @@ class JwtMiddleware
 
             $decodedToken = JWT::decode($token, new Key(env('JWT_SECRET'), 'HS256'));
 
+            session(['admin_user' => $decodedToken]);
+
             // 토큰이 유효한지 확인
             if ($this->isTokenExpired($decodedToken)) {
                 return helpers_json_response(HttpConstant::UNAUTHORIZED, [], "토큰의 유효시간이 만료되었습니다.");

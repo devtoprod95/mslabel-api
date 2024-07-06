@@ -2,10 +2,13 @@
 
 use App\Constants\HttpConstant;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Psr\Log\LogLevel;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 if (!function_exists('helpers_curl')) {
     /**
@@ -207,5 +210,42 @@ if (!function_exists("printQuery")) {
         }
 
         dd($sql);
+    }
+}
+
+if (!function_exists('saveLocalImage')) {
+    /**
+     * 이미지 파일을 저장하는 함수
+     *
+     * @param string $path 저장 경로
+     * @param \Illuminate\Http\UploadedFile $file 업로드된 파일
+     * @param string $filename 저장할 파일명
+     * @throws \Exception
+     */
+    function saveLocalImage(UploadedFile $file, string $path): string
+    {
+        try {
+            // 디렉토리가 존재하지 않으면 생성
+            if (!Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->makeDirectory($path);
+            }
+
+            // 타임스탬프와 랜덤 문자열을 결합한 고유한 파일명 생성
+            $uniqueFilename = time() . '_' . Str::random(10);
+
+            // 파일 확장자 추출
+            $extension = $file->getClientOriginalExtension();
+            $filePath  = $path . '/' . $uniqueFilename . '.' . $extension;
+
+            // 파일 저장
+            $file->storeAs($path, $uniqueFilename . '.' . $extension, 'public');
+
+            // 서버 도메인을 포함한 전체 URL 생성
+            $fullUrl = config('app.url') . '/storage/' . $filePath;
+
+            return $fullUrl;
+        } catch (Exception $e) {
+            throw new Exception('이미지 저장 중 오류가 발생했습니다: ' . $e->getMessage());
+        }
     }
 }

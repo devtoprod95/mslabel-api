@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\JsonResponse;
 use App\Constants\HttpConstant;
 use App\Constants\MenuConstant;
 use App\Constants\MenuErrorMessageConstant;
-use App\Services\MenuService;
+use App\Http\Controllers\Controller;
+use App\Services\Admin\MenuService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

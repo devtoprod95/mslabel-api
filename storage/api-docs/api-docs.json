@@ -63,7 +63,7 @@
                 ],
                 "summary": "대표 메뉴 리스트",
                 "description": "대표 메뉴 리스트 endPoint",
-                "operationId": "fe2c9652d910a2c0b24fd3207f1c40cb",
+                "operationId": "fa3aea2abbf28f25d68a82e8729e1628",
                 "requestBody": {
                     "required": false
                 },
@@ -123,7 +123,7 @@
                 ],
                 "summary": "대표 메뉴 수정",
                 "description": "대표 메뉴 수정 endPoint",
-                "operationId": "8cd6e77777ed30dc56b5dec30fb87901",
+                "operationId": "cd88be99575d562ace0f1bef3d35f983",
                 "parameters": [
                     {
                         "name": "id",
@@ -201,7 +201,7 @@
                 ],
                 "summary": "서브 메뉴 리스트",
                 "description": "서브 메뉴 리스트 endPoint",
-                "operationId": "5c5d4d45251afdc47a13c97d7d994e04",
+                "operationId": "6b543c07d34fd6d08702cde1a99bec2c",
                 "parameters": [
                     {
                         "name": "page",
@@ -310,7 +310,7 @@
                 ],
                 "summary": "서브 메뉴 생성",
                 "description": "서브 메뉴 생성 endPoint",
-                "operationId": "7b3972921e4784a36c567266769038bf",
+                "operationId": "96edb98d550e88df2553d6a9f9a1be3f",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -377,7 +377,7 @@
                 ],
                 "summary": "서브 메뉴 삭제",
                 "description": "서브 메뉴 삭제 endPoint",
-                "operationId": "c7da47ec8ea37aafea0fe0849e30f4a2",
+                "operationId": "1252d432c876082509d550b74f530c83",
                 "parameters": [
                     {
                         "name": "id",
@@ -448,7 +448,7 @@
                 ],
                 "summary": "서브 메뉴 수정",
                 "description": "서브 메뉴 수정 endPoint",
-                "operationId": "5f6da65dc2f4a986c75c436520a61d98",
+                "operationId": "238aee692e00da7a8429880db08822c0",
                 "parameters": [
                     {
                         "name": "id",
@@ -519,15 +519,131 @@
                 ]
             }
         },
-        "/api/v1/main": {
+        "/api/v1/admin/main/topBanners": {
             "get": {
                 "tags": [
                     "메인"
                 ],
-                "summary": "메인 페이지 데이터",
-                "operationId": "d0ffd2ecb5879ee4b4f4970f2e50cdbe",
+                "summary": "메인 상단 배너 리스트",
+                "description": "메인 상단 배너 리스트 endPoint",
+                "operationId": "fc6a29cb908d7418321009db741372fa",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "페이지 수",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "페이징 사이즈 Max 50",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 50
+                        }
+                    },
+                    {
+                        "name": "is_show",
+                        "in": "query",
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "search_cls",
+                        "in": "query",
+                        "description": "검색 분류 title: 제목",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "검색어",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/main/topBanner/create": {
+            "post": {
+                "tags": [
+                    "메인"
+                ],
+                "summary": "메인 상단 배너 생성",
+                "description": "메인 상단 배너 생성 endPoint",
+                "operationId": "5911012542f4a6c64cfdc4ccca2db931",
                 "requestBody": {
-                    "required": false
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MainTopBannerCreateSchema"
+                            }
+                        }
+                    }
                 },
                 "responses": {
                     "200": {
@@ -861,6 +977,50 @@
                         "description": "서브 메뉴 순서",
                         "type": "integer",
                         "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "MainTopBannerCreateSchema": {
+                "description": "메인 상단 배너 생성 스키마",
+                "required": [
+                    "title",
+                    "is_show",
+                    "is_always_show",
+                    "show_started_at",
+                    "show_ended_at",
+                    "thumbnail"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "메인 상단 베터 제목",
+                        "type": "string",
+                        "example": "메인 상단 베너 테스트1"
+                    },
+                    "is_show": {
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "type": "string",
+                        "example": "Y"
+                    },
+                    "is_always_show": {
+                        "description": "상시 노출 여부 Y: 상시 노출, N: 상시 비노출",
+                        "type": "string",
+                        "example": "N"
+                    },
+                    "show_started_at": {
+                        "description": "노출 시작일 | 날짜형식(YYYY-MM-DD)",
+                        "type": "string",
+                        "example": "2024-07-01"
+                    },
+                    "show_ended_at": {
+                        "description": "노출 종료일 | 날짜형식(YYYY-MM-DD)",
+                        "type": "string",
+                        "example": "2024-07-30"
+                    },
+                    "thumbnail": {
+                        "description": "이미지 파일 (사이즈 1920x 560(px), 2MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
                     }
                 },
                 "type": "object"
