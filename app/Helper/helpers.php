@@ -249,3 +249,29 @@ if (!function_exists('saveLocalImage')) {
         }
     }
 }
+
+if (!function_exists('deleteLocalFile')) {
+    /**
+     * 로컬 파일을 삭제하는 함수
+     *
+     * @param string $path 파일 경로
+     * @return bool 파일 삭제 성공 여부
+     * @throws Exception
+     */
+    function deleteLocalFile(string $path): bool
+    {
+        
+        try {
+            $appUrl = env("APP_URL") . "/storage/";
+            $path   = str_replace($appUrl, '', $path);
+
+            // 파일이 존재하면 삭제
+            if (Storage::disk('public')->exists($path)) {
+                return Storage::disk('public')->delete($path);
+            }
+            return false;
+        } catch (Exception $e) {
+            throw new Exception('파일 삭제 중 오류가 발생했습니다: ' . $e->getMessage());
+        }
+    }
+}

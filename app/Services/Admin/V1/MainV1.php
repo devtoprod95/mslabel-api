@@ -3,6 +3,7 @@
 namespace App\Services\Admin\V1;
 
 use App\Abstracts\Admin\MainAbstract;
+use App\Constants\MainErrorMessageConstant;
 use App\Models\MainTopBanner;
 use Carbon\Carbon;
 use Exception;
@@ -107,6 +108,85 @@ class MainV1 extends MainAbstract
                 'show_started_at' => $showStartedAt,
                 'show_ended_at'   => $showEndedAt,
             ]);
+
+            $returnMsg = helpers_success_message();
+        } catch (Exception $e) {
+            $returnMsg = helpers_fail_message($e->getMessage());
+        }
+
+        return $returnMsg;
+    }
+
+    /**
+     * @func topBannerEdit
+     * @description '메인 상단 배너 수정'
+     * @param int $id
+     * @param array $params
+     * @return array
+     */
+    public function topBannerEdit(int $id, array $params): array
+    {
+        $returnMsg = $this->returnMsg;
+
+        try {
+            $userObj       = session("admin_user")->sub->user;
+            $title         = $params['title'];
+            $userId        = $userObj->user_id;
+            $isAlwaysShow  = $params['isAlwaysShow'];
+            $showStartedAt = $params['showStartedAt'];
+            $showEndedAt   = $params['showEndedAt'];
+            $isShow        = $params['isShow'];
+            $thumbnail     = $params['thumbnail'];
+
+            $obj = MainTopBanner::where("id", $id)->first();
+
+            if( $obj == null ){
+                throw new Exception(MainErrorMessageConstant::getNotHaveErrorMessage("MAIN_TOP_BANNER"));
+            }
+
+            deleteLocalFile($obj->img_url);
+
+            $dateName  = Carbon::now()->format("Y/m/d");
+            $path      = "main/topBanners/{$dateName}";
+            $savedPath = saveLocalImage($thumbnail, $path);
+
+            MainTopBanner::where("id", $id)->update([
+                'title'           => $title,
+                'user_id'         => $userId,
+                'img_url'         => $savedPath,
+                'is_show'         => $isShow,
+                'is_always_show'  => $isAlwaysShow,
+                'show_started_at' => $showStartedAt,
+                'show_ended_at'   => $showEndedAt,
+            ]);
+
+            $returnMsg = helpers_success_message();
+        } catch (Exception $e) {
+            $returnMsg = helpers_fail_message($e->getMessage());
+        }
+
+        return $returnMsg;
+    }
+
+    /**
+     * @func topBannerDelete
+     * @description '메인 상단 배너 삭제'
+     * @param int $id
+     * @return array
+     */
+    public function topBannerDelete(int $id): array
+    {
+        $returnMsg = $this->returnMsg;
+
+        try {
+            $obj = MainTopBanner::where("id", $id)->first();
+
+            if( $obj == null ){
+                throw new Exception(MainErrorMessageConstant::getNotHaveErrorMessage("MAIN_TOP_BANNER"));
+            }
+
+            deleteLocalFile($obj->img_url);
+            MainTopBanner::where("id", $id)->delete();
 
             $returnMsg = helpers_success_message();
         } catch (Exception $e) {

@@ -23,6 +23,7 @@ class MainErrorMessageConstant
     public const ERROR_MESSAGE_THUMBNAIL_TYPE         = "이미지 타입";
     public const ERROR_MESSAGE_THUMBNAIL_SIZE_2MB     = "2MB 이하 이미지만 업로드 가능";
     public const ERROR_MESSAGE_THUMBNAIL_WIDTH_HEIGHT = "1920x560 까지만 업로드 가능";
+    public const ERROR_MESSAGE_MAIN_TOP_BANNER        = "main top banner";
    
     public static function getErrorMessageNotDefault($constantName): string
     {

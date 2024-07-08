@@ -30,6 +30,10 @@ Route::name('v1.')->prefix('v1')->group(function () {
                 Route::get("/topBanners", [AdminMainController::class, "topBannersList"])->name("topBannersList");
                 /** 상단 배너 등록 */
                 Route::post("/topBanner/create", [AdminMainController::class, "topBannerCreate"])->name("topBannerCreate");
+                /** 상단 배너 수정 */
+                Route::post("/topBanner/edit/{id}", [AdminMainController::class, "topBannerEdit"])->name("topBannerEdit");
+                /** 상단 배너 삭제 */
+                Route::delete("/topBanner/delete/{id}", [AdminMainController::class, "topBannerDelete"])->name("topBannerDelete");
             });
 
             Route::get('/main', [MainController::class, 'list'])->name('main.list');

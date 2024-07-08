@@ -36,4 +36,27 @@ class MainService
     {
         return $this->mainAbstract->topBannerCreate($params);
     }
+
+    /**
+     * @func topBannerEdit
+     * @description '메인 상단 배너 수정'
+     * @param int $id
+     * @param array $params
+     * @return array
+     */
+    public function topBannerEdit(int $id, array $params): array
+    {
+        return $this->mainAbstract->topBannerEdit($id, $params);
+    }
+
+    /**
+     * @func topBannerDelete
+     * @description '메인 상단 배너 삭제'
+     * @param int $id
+     * @return array
+     */
+    public function topBannerDelete(int $id): array
+    {
+        return $this->mainAbstract->topBannerDelete($id);
+    }
 }

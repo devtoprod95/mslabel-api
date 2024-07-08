@@ -693,6 +693,154 @@
                     }
                 ]
             }
+        },
+        "/api/v1/admin/main/topBanner/edit/{id}": {
+            "post": {
+                "tags": [
+                    "메인"
+                ],
+                "summary": "메인 상단 배너 수정",
+                "description": "메인 상단 배너 수정 endPoint",
+                "operationId": "e3bd54e63a12b959ed1958932bec0b82",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "메인 상단 배너 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MainTopBannerEditSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/main/topBanner/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "메인"
+                ],
+                "summary": "메인 상단 배너 삭제",
+                "description": "메인 상단 배너 삭제 endPoint",
+                "operationId": "d3efca51f878c4c000988b2398f9108e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "메인 상단 배너 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -982,6 +1130,50 @@
                 "type": "object"
             },
             "MainTopBannerCreateSchema": {
+                "description": "메인 상단 배너 생성 스키마",
+                "required": [
+                    "title",
+                    "is_show",
+                    "is_always_show",
+                    "show_started_at",
+                    "show_ended_at",
+                    "thumbnail"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "메인 상단 베터 제목",
+                        "type": "string",
+                        "example": "메인 상단 베너 테스트1"
+                    },
+                    "is_show": {
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "type": "string",
+                        "example": "Y"
+                    },
+                    "is_always_show": {
+                        "description": "상시 노출 여부 Y: 상시 노출, N: 상시 비노출",
+                        "type": "string",
+                        "example": "N"
+                    },
+                    "show_started_at": {
+                        "description": "노출 시작일 | 날짜형식(YYYY-MM-DD)",
+                        "type": "string",
+                        "example": "2024-07-01"
+                    },
+                    "show_ended_at": {
+                        "description": "노출 종료일 | 날짜형식(YYYY-MM-DD)",
+                        "type": "string",
+                        "example": "2024-07-30"
+                    },
+                    "thumbnail": {
+                        "description": "이미지 파일 (사이즈 1920x 560(px), 2MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "MainTopBannerEditSchema": {
                 "description": "메인 상단 배너 생성 스키마",
                 "required": [
                     "title",
