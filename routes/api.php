@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\MainController as AdminMainController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
-use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,17 +25,33 @@ Route::name('v1.')->prefix('v1')->group(function () {
         Route::name('admin.')->prefix('admin')->group(function () {
             /** 메인 관련 */
             Route::name('main.')->prefix('main')->group(function () {
-                /** 상단 배너 리스트 */
-                Route::get("/topBanners", [AdminMainController::class, "topBannersList"])->name("topBannersList");
-                /** 상단 배너 등록 */
-                Route::post("/topBanner/create", [AdminMainController::class, "topBannerCreate"])->name("topBannerCreate");
-                /** 상단 배너 수정 */
-                Route::post("/topBanner/edit/{id}", [AdminMainController::class, "topBannerEdit"])->name("topBannerEdit");
-                /** 상단 배너 삭제 */
-                Route::delete("/topBanner/delete/{id}", [AdminMainController::class, "topBannerDelete"])->name("topBannerDelete");
-            });
 
-            Route::get('/main', [MainController::class, 'list'])->name('main.list');
+                /** 상단 배너 관련 */
+                Route::name('topBanners.')->prefix('topBanners')->group(function () {
+                    /** 상단 배너 리스트 */
+                    Route::get("/", [AdminMainController::class, "topBannersList"])->name("list");
+                    /** 상단 배너 등록 */
+                    Route::post("/create", [AdminMainController::class, "topBannerCreate"])->name("create");
+                    /** 상단 배너 수정 */
+                    Route::post("/edit/{id}", [AdminMainController::class, "topBannerEdit"])->name("edit");
+                    /** 상단 배너 삭제 */
+                    Route::delete("/delete/{id}", [AdminMainController::class, "topBannerDelete"])->name("delete");
+                });
+
+                /** 소개 관련 */
+                Route::name('intro.')->prefix('intro')->group(function () {
+                    /** 소개 리스트 */
+                    Route::get("/", [AdminMainController::class, "introList"])->name("list");
+                    /** 소개 등록 */
+                    Route::post("/create", [AdminMainController::class, "introCreate"])->name("create");
+                    /** 소개 수정 */
+                    Route::post("/edit/{id}", [AdminMainController::class, "introEdit"])->name("edit");
+                    /** 소개 삭제 */
+                    Route::delete("/delete/{id}", [AdminMainController::class, "introDelete"])->name("delete");
+                });
+
+
+            });
 
             /** 메뉴 관련 */
             Route::name('menu.')->prefix('menu')->group(function () {

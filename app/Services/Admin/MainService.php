@@ -59,4 +59,49 @@ class MainService
     {
         return $this->mainAbstract->topBannerDelete($id);
     }
+
+    /**
+     * @func introList
+     * @description '메인 소개 리스트'
+     * @param array $params
+     * @return array
+     */
+    public function introList(array $params): array
+    {
+        return $this->mainAbstract->introList($params);
+    }
+
+    /**
+     * @func introCreate
+     * @description '메인 소개 등록'
+     * @param array $params
+     * @return array
+     */
+    public function introCreate(array $params): array
+    {
+        return $this->mainAbstract->introCreate($params);
+    }
+
+    /**
+     * @func introEdit
+     * @description '메인 소개 수정'
+     * @param int $id
+     * @param array $params
+     * @return array
+     */
+    public function introEdit(int $id, array $params): array
+    {
+        return $this->mainAbstract->introEdit($id, $params);
+    }
+
+    /**
+     * @func introDelete
+     * @description '메인 소개 삭제'
+     * @param int $id
+     * @return array
+     */
+    public function introDelete(int $id): array
+    {
+        return $this->mainAbstract->introDelete($id);
+    }
 }

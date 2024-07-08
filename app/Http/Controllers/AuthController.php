@@ -61,7 +61,12 @@ class AuthController extends Controller
      */
     private function createToken(AdminData $user): array
     {
-        $expirationTime = time() + ( 3600 * 3 ); // 3시간 후 만료
+        if( env("APP_ENV") == "production" ){
+            $expirationTime = time() + ( 3600 * 3 ); // 3시간 후 만료
+        } else {
+            $expirationTime = time() + ( 3600 * 30 ); // 30시간 후 만료
+        }
+
         $data           = ["user" => $user];
         $payload        = [
             'iss' => Route::currentRouteName(), // 발행자

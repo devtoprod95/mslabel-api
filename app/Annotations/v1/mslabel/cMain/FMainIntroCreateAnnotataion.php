@@ -5,14 +5,14 @@ namespace App\Annotations\v1\mslabel\cMain;
 /**
  * 
  * @OA\Schema(
- *     schema="MainTopBannerCreateSchema",
- *     required={"title", "is_show", "is_always_show", "show_started_at", "show_ended_at", "thumbnail"},
- *     description="메인 상단 배너 생성 스키마",
+ *     schema="MainIntroCreateSchema",
+ *     required={"title", "is_show", "desc", "thumbnail"},
+ *     description="메인 소개 생성 스키마",
  *     @OA\Property(
  *         property="title",
  *         type="string",
- *         example="메인 상단 배너 테스트1",
- *         description="메인 상단 배너 제목"
+ *         example="메인 소개 테스트1",
+ *         description="메인 소개 제목"
  *     ),
  *     @OA\Property(
  *         property="is_show",
@@ -21,42 +21,30 @@ namespace App\Annotations\v1\mslabel\cMain;
  *         description="노출 여부 Y: 노출, N: 비노출"
  *     ),
  *     @OA\Property(
- *         property="is_always_show",
+ *         property="desc",
  *         type="string",
- *         example="N",
- *         description="상시 노출 여부 Y: 상시 노출, N: 상시 비노출"
- *     ),
- *     @OA\Property(
- *         property="show_started_at",
- *         type="string",
- *         example="2024-07-01",
- *         description="노출 시작일 | 날짜형식(YYYY-MM-DD)"
- *     ),
- *     @OA\Property(
- *         property="show_ended_at",
- *         type="string",
- *         example="2024-07-30",
- *         description="노출 종료일 | 날짜형식(YYYY-MM-DD)"
+ *         example="메인 소개 테스트1 내용",
+ *         description="내용"
  *     ),
  *     @OA\Property(
  *         property="thumbnail",
  *         type="file",
  *         example="",
- *         description="이미지 파일 (사이즈 1920x 560(px), 2MB 이하, 이미지 형식만 등록 가능)"
+ *         description="이미지 파일 (사이즈 413 x 271(px), 2MB 이하, 이미지 형식만 등록 가능)"
  *     )
  * )
  * 
  * 
  * @OA\Post(
- *     path="/api/v1/admin/main/topBanner/create",
- *     summary="메인 상단 배너 생성",
- *     description="메인 상단 배너 생성 endPoint",
+ *     path="/api/v1/admin/main/intro/create",
+ *     summary="메인 소개 생성",
+ *     description="메인 소개 생성 endPoint",
  *     tags={"메인"},
  *     security={{"BearerAuth": {}}},
  *     @OA\RequestBody(
  *         @OA\MediaType(
  *             mediaType="multipart/form-data",
- *             @OA\Schema(ref="#/components/schemas/MainTopBannerCreateSchema")
+ *             @OA\Schema(ref="#/components/schemas/MainIntroCreateSchema")
  *         )
  *     ),
  *     @OA\Response(
@@ -82,5 +70,5 @@ namespace App\Annotations\v1\mslabel\cMain;
  * )
 */
 
-class BMainTopBannerCreateAnnotataion{
+class FMainIntroCreateAnnotataion{
 }

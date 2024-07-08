@@ -17,13 +17,16 @@ class MainErrorMessageConstant
     public const ERROR_MESSAGE_SHOW_ENDED_AT          = "show_ended_at";
     public const ERROR_MESSAGE_SHOW_ENDED_AT_FORMAT   = "show_ended_at not dateFormat";
     public const ERROR_MESSAGE_IS_SHOW                = "is_show";
+    public const ERROR_MESSAGE_DESC                   = "desc";
     public const ERROR_MESSAGE_THUMBNAIL              = "thumbnail";
     public const ERROR_MESSAGE_PAGE                   = "page";
     public const ERROR_MESSAGE_PAGE_SIZE              = "page_size";
     public const ERROR_MESSAGE_THUMBNAIL_TYPE         = "이미지 타입";
     public const ERROR_MESSAGE_THUMBNAIL_SIZE_2MB     = "2MB 이하 이미지만 업로드 가능";
-    public const ERROR_MESSAGE_THUMBNAIL_WIDTH_HEIGHT = "1920x560 까지만 업로드 가능";
+    public const ERROR_MESSAGE_THUMBNAIL_1920_560     = "1920x560 까지만 업로드 가능";
+    public const ERROR_MESSAGE_THUMBNAIL_413_271      = "413x271 까지만 업로드 가능";
     public const ERROR_MESSAGE_MAIN_TOP_BANNER        = "main top banner";
+    public const ERROR_MESSAGE_MAIN_INTRO             = "main intro";
    
     public static function getErrorMessageNotDefault($constantName): string
     {

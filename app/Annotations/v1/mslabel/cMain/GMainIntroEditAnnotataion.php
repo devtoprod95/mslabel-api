@@ -5,38 +5,26 @@ namespace App\Annotations\v1\mslabel\cMain;
 /**
  * 
  * @OA\Schema(
- *     schema="MainTopBannerEditSchema",
- *     required={"title", "is_show", "is_always_show", "show_started_at", "show_ended_at", "thumbnail"},
- *     description="메인 상단 배너 생성 스키마",
+ *     schema="MainIntroEditSchema",
+ *     required={"title", "is_show", "desc", "thumbnail"},
+ *     description="메인 소개 생성 스키마",
  *     @OA\Property(
  *         property="title",
  *         type="string",
- *         example="메인 상단 배너 테스트1",
- *         description="메인 상단 배너 제목"
+ *         example="메인 소개 테스트1",
+ *         description="메인 소개 제목"
+ *     ),
+ *     @OA\Property(
+ *         property="desc",
+ *         type="string",
+ *         example="메인 소개 테스트1 내용",
+ *         description="내용"
  *     ),
  *     @OA\Property(
  *         property="is_show",
  *         type="string",
  *         example="Y",
  *         description="노출 여부 Y: 노출, N: 비노출"
- *     ),
- *     @OA\Property(
- *         property="is_always_show",
- *         type="string",
- *         example="N",
- *         description="상시 노출 여부 Y: 상시 노출, N: 상시 비노출"
- *     ),
- *     @OA\Property(
- *         property="show_started_at",
- *         type="string",
- *         example="2024-07-01",
- *         description="노출 시작일 | 날짜형식(YYYY-MM-DD)"
- *     ),
- *     @OA\Property(
- *         property="show_ended_at",
- *         type="string",
- *         example="2024-07-30",
- *         description="노출 종료일 | 날짜형식(YYYY-MM-DD)"
  *     ),
  *     @OA\Property(
  *         property="thumbnail",
@@ -48,16 +36,16 @@ namespace App\Annotations\v1\mslabel\cMain;
  * 
  * 
  * @OA\Post(
- *     path="/api/v1/admin/main/topBanner/edit/{id}",
- *     summary="메인 상단 배너 수정",
- *     description="메인 상단 배너 수정 endPoint",
+ *     path="/api/v1/admin/main/intro/edit/{id}",
+ *     summary="메인 소개 수정",
+ *     description="메인 소개 수정 endPoint",
  *     tags={"메인"},
  *     security={{"BearerAuth": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
  *         required=true,
- *         description="메인 상단 배너 ID",
+ *         description="메인 소개 ID",
  *         @OA\Schema(
  *             type="integer"
  *         )
@@ -65,7 +53,7 @@ namespace App\Annotations\v1\mslabel\cMain;
  *     @OA\RequestBody(
  *         @OA\MediaType(
  *             mediaType="multipart/form-data",
- *             @OA\Schema(ref="#/components/schemas/MainTopBannerEditSchema")
+ *             @OA\Schema(ref="#/components/schemas/MainIntroEditSchema")
  *         )
  *     ),
  *     @OA\Response(
@@ -91,5 +79,5 @@ namespace App\Annotations\v1\mslabel\cMain;
  * )
 */
 
-class CMainTopBannerEditAnnotataion{
+class GMainIntroEditAnnotataion{
 }

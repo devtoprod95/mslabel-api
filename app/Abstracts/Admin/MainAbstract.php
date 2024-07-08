@@ -36,4 +36,37 @@ abstract class MainAbstract
      * @return array
      */
     abstract function topBannerDelete(int $id): array;
+
+    /**
+     * @func introList
+     * @description '메인 소개 리스트'
+     * @param array $params
+     * @return array
+     */
+    abstract function introList(array $params): array;
+
+    /**
+     * @func introCreate
+     * @description '메인 소개 등록'
+     * @param array $params
+     * @return array
+     */
+    abstract function introCreate(array $params): array;
+
+    /**
+     * @func introEdit
+     * @description '메인 소개 수정'
+     * @param int $id
+     * @param array $params
+     * @return array
+     */
+    abstract function introEdit(int $id, array $params): array;
+
+    /**
+     * @func introDelete
+     * @description '메인 소개 삭제'
+     * @param int $id
+     * @return array
+     */
+    abstract function introDelete(int $id): array;
 }
