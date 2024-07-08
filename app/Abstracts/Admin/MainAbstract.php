@@ -69,4 +69,37 @@ abstract class MainAbstract
      * @return array
      */
     abstract function introDelete(int $id): array;
+
+    /**
+     * @func intro2List
+     * @description '메인 소개2 리스트'
+     * @param array $params
+     * @return array
+     */
+    abstract function intro2List(array $params): array;
+
+    /**
+     * @func intro2Create
+     * @description '메인 소개2 등록'
+     * @param array $params
+     * @return array
+     */
+    abstract function intro2Create(array $params): array;
+
+    /**
+     * @func intro2Edit
+     * @description '메인 소개2 수정'
+     * @param int $id
+     * @param array $params
+     * @return array
+     */
+    abstract function intro2Edit(int $id, array $params): array;
+
+    /**
+     * @func intro2Delete
+     * @description '메인 소개2 삭제'
+     * @param int $id
+     * @return array
+     */
+    abstract function intro2Delete(int $id): array;
 }

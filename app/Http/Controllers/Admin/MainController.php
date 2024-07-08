@@ -371,4 +371,161 @@ class MainController extends Controller
             return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
         }
     }
+
+    function intro2List(): JsonResponse
+    {
+        try {
+            $validator = Validator::make($this->request->all(), [
+                'page'      => 'required|int',
+                'page_size' => 'required|string',
+            ], [
+                'page.required'      => MainErrorMessageConstant::getNotHaveErrorMessage("PAGE"),
+                'page_size.required' => MainErrorMessageConstant::getNotHaveErrorMessage("PAGE_SIZE"),
+            ]);
+            if ($validator->fails()) {
+                throw new Exception($validator->errors()->first());
+            }
+
+            $page      = $this->request->get("page", 1);
+            $pageSize  = $this->request->get("page_size", 50);
+            $isShow    = $this->request->get("is_show", "") ?? "";
+            $searchCls = $this->request->get("search_cls", "") ?? "";
+            $keyword   = $this->request->get("keyword", "") ?? "";
+            $sort      = $this->request->get("sort", "created_at|desc") ?? "created_at|desc";
+
+            if( $pageSize > 50 ) $pageSize = 50;
+
+            $params = [
+                'page'      => $page,
+                'pageSize'  => $pageSize,
+                'isShow'    => $isShow,
+                'searchCls' => $searchCls,
+                'keyword'   => $keyword,
+                'sort'      => $sort,
+            ];
+
+            $result = $this->mainService->intro2List($params);
+            if( $result["isSuccess"] == true ){
+                return helpers_json_response(HttpConstant::OK, $result);
+            } else {
+                throw new Exception($result["msg"]);
+            }
+        } catch (Exception $e) {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
+        }
+    }
+
+    function intro2Create(): JsonResponse
+    {
+        try {
+            $validator = Validator::make($this->request->all(), [
+                'title'     => 'required|string',
+                'is_show'   => 'required|string',
+                'thumbnail' => 'required|file',
+            ], [
+                'title.required'     => MainErrorMessageConstant::getNotHaveErrorMessage("TITLE"),
+                'is_show.required'   => MainErrorMessageConstant::getNotHaveErrorMessage("IS_SHOW"),
+                'thumbnail.required' => MainErrorMessageConstant::getNotHaveErrorMessage("THUMBNAIL"),
+            ]);
+            if ($validator->fails()) {
+                throw new Exception($validator->errors()->first());
+            }
+
+            $thumbnail = $this->request->file('thumbnail');
+            if (strpos($thumbnail->getClientMimeType(), 'image') !== 0) {
+                throw new Exception(MainErrorMessageConstant::getFitErrorMessage("THUMBNAIL_TYPE"));
+            }
+            // 파일 크기 검증 (2MB 이하)
+            if ($thumbnail->getSize() > 2 * 1024 * 1024) {
+                throw new Exception(MainErrorMessageConstant::getFitErrorMessage("THUMBNAIL_SIZE_2MB"));
+            }
+            // 이미지 크기 검증 (293x581)
+            list($width, $height) = getimagesize($thumbnail->getPathname());
+            if ($width > 293 || $height > 581) {
+                throw new Exception(MainErrorMessageConstant::getFitErrorMessage("THUMBNAIL_293_581"));
+            }
+
+            $title  = $this->request->post('title');
+            $isShow = $this->request->post('is_show');
+
+            $params = [
+                'title'     => $title,
+                'isShow'    => $isShow,
+                'thumbnail' => $thumbnail,
+            ];
+
+            $result = $this->mainService->intro2Create($params);
+            if( $result["isSuccess"] == true ){
+                return helpers_json_response(HttpConstant::OK, $result);
+            } else {
+                throw new Exception($result["msg"]);
+            }
+        } catch (Exception $e) {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
+        }
+    }
+
+    function intro2Edit(int $id): JsonResponse
+    {
+        try {
+            $validator = Validator::make($this->request->all(), [
+                'title'     => 'required|string',
+                'is_show'   => 'required|string',
+                'thumbnail' => 'required|file',
+            ], [
+                'title.required'     => MainErrorMessageConstant::getNotHaveErrorMessage("TITLE"),
+                'is_show.required'   => MainErrorMessageConstant::getNotHaveErrorMessage("IS_SHOW"),
+                'thumbnail.required' => MainErrorMessageConstant::getNotHaveErrorMessage("THUMBNAIL"),
+            ]);
+            if ($validator->fails()) {
+                throw new Exception($validator->errors()->first());
+            }
+
+            $thumbnail = $this->request->file('thumbnail');
+            if (strpos($thumbnail->getClientMimeType(), 'image') !== 0) {
+                throw new Exception(MainErrorMessageConstant::getFitErrorMessage("THUMBNAIL_TYPE"));
+            }
+            // 파일 크기 검증 (2MB 이하)
+            if ($thumbnail->getSize() > 2 * 1024 * 1024) {
+                throw new Exception(MainErrorMessageConstant::getFitErrorMessage("THUMBNAIL_SIZE_2MB"));
+            }
+            // 이미지 크기 검증 (293x581)
+            list($width, $height) = getimagesize($thumbnail->getPathname());
+            if ($width > 293 || $height > 581) {
+                throw new Exception(MainErrorMessageConstant::getFitErrorMessage("THUMBNAIL_293_581"));
+            }
+
+            $title  = $this->request->post('title');
+            $isShow = $this->request->post('is_show');
+
+            $params = [
+                'title'     => $title,
+                'isShow'    => $isShow,
+                'thumbnail' => $thumbnail,
+            ];
+
+            $result = $this->mainService->intro2Edit($id, $params);
+            if( $result["isSuccess"] == true ){
+                return helpers_json_response(HttpConstant::OK, $result);
+            } else {
+                throw new Exception($result["msg"]);
+            }
+        } catch (Exception $e) {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
+        }
+    }
+
+    function intro2Delete(int $id): JsonResponse
+    {
+        try {
+            $result = $this->mainService->intro2Delete($id);
+            if( $result["isSuccess"] == true ){
+                return helpers_json_response(HttpConstant::OK, $result);
+            } else {
+                throw new Exception($result["msg"]);
+            }
+        } catch (Exception $e) {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
+        }
+    }
 }

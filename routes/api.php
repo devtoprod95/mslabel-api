@@ -50,6 +50,18 @@ Route::name('v1.')->prefix('v1')->group(function () {
                     Route::delete("/delete/{id}", [AdminMainController::class, "introDelete"])->name("delete");
                 });
 
+                /** 소개2 관련 */
+                Route::name('intro2.')->prefix('intro2')->group(function () {
+                    /** 소개 리스트 */
+                    Route::get("/", [AdminMainController::class, "intro2List"])->name("list");
+                    /** 소개 등록 */
+                    Route::post("/create", [AdminMainController::class, "intro2Create"])->name("create");
+                    /** 소개 수정 */
+                    Route::post("/edit/{id}", [AdminMainController::class, "intro2Edit"])->name("edit");
+                    /** 소개 삭제 */
+                    Route::delete("/delete/{id}", [AdminMainController::class, "intro2Delete"])->name("delete");
+                });
+
 
             });
 

@@ -1164,6 +1164,329 @@
                     }
                 ]
             }
+        },
+        "/api/v1/admin/main/intro2": {
+            "get": {
+                "tags": [
+                    "메인"
+                ],
+                "summary": "메인 소개2 리스트",
+                "description": "메인 소개 리스트2 endPoint",
+                "operationId": "9f792860d5f022ebc56781313a1a02f7",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "페이지 수",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "페이징 사이즈 Max 50",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 50
+                        }
+                    },
+                    {
+                        "name": "is_show",
+                        "in": "query",
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "search_cls",
+                        "in": "query",
+                        "description": "검색 분류 title: 제목",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "검색어",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/main/intro2/create": {
+            "post": {
+                "tags": [
+                    "메인"
+                ],
+                "summary": "메인 소개2 생성",
+                "description": "메인 소개2 생성 endPoint",
+                "operationId": "564849a3fbd7d7b34a03de844da227cb",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MainIntro2CreateSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/main/intro2/edit/{id}": {
+            "post": {
+                "tags": [
+                    "메인"
+                ],
+                "summary": "메인 소개2 수정",
+                "description": "메인 소개2 수정 endPoint",
+                "operationId": "4ffcc4ff5591a1e613033b265679b22a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "메인 소개2 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MainIntro2EditSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/main/intro2/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "메인"
+                ],
+                "summary": "메인 소개2 삭제",
+                "description": "메인 소개2 삭제 endPoint",
+                "operationId": "1f5b0168649aa2a2681090ea1e058510",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "메인 소개2 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1598,6 +1921,58 @@
                     },
                     "thumbnail": {
                         "description": "이미지 파일 (사이즈 1920x 560(px), 2MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "MainIntro2CreateSchema": {
+                "description": "메인 소개2 생성 스키마",
+                "required": [
+                    "title",
+                    "is_show",
+                    "thumbnail"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "메인 소개2 제목",
+                        "type": "string",
+                        "example": "메인 소개2 테스트1"
+                    },
+                    "is_show": {
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "type": "string",
+                        "example": "Y"
+                    },
+                    "thumbnail": {
+                        "description": "이미지 파일 (사이즈 293 x 581(px), 2MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "MainIntro2EditSchema": {
+                "description": "메인 소개2 생성 스키마",
+                "required": [
+                    "title",
+                    "is_show",
+                    "thumbnail"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "메인 소개2 제목",
+                        "type": "string",
+                        "example": "메인 소개2 테스트1"
+                    },
+                    "is_show": {
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "type": "string",
+                        "example": "Y"
+                    },
+                    "thumbnail": {
+                        "description": "이미지 파일 (사이즈 293 x 581(px), 2MB 이하, 이미지 형식만 등록 가능)",
                         "type": "file",
                         "example": ""
                     }

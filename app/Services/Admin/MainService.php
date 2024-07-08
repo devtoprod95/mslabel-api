@@ -104,4 +104,49 @@ class MainService
     {
         return $this->mainAbstract->introDelete($id);
     }
+
+    /**
+     * @func intro2List
+     * @description '메인 소개2 리스트'
+     * @param array $params
+     * @return array
+     */
+    public function intro2List(array $params): array
+    {
+        return $this->mainAbstract->intro2List($params);
+    }
+
+    /**
+     * @func intro2Create
+     * @description '메인 소개2 등록'
+     * @param array $params
+     * @return array
+     */
+    public function intro2Create(array $params): array
+    {
+        return $this->mainAbstract->intro2Create($params);
+    }
+
+    /**
+     * @func intro2Edit
+     * @description '메인 소개2 수정'
+     * @param int $id
+     * @param array $params
+     * @return array
+     */
+    public function intro2Edit(int $id, array $params): array
+    {
+        return $this->mainAbstract->intro2Edit($id, $params);
+    }
+
+    /**
+     * @func intro2Delete
+     * @description '메인 소개2 삭제'
+     * @param int $id
+     * @return array
+     */
+    public function intro2Delete(int $id): array
+    {
+        return $this->mainAbstract->intro2Delete($id);
+    }
 }
