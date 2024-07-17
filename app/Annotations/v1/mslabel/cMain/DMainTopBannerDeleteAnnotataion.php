@@ -7,7 +7,7 @@ namespace App\Annotations\v1\mslabel\cMain;
  * 
  * 
  * @OA\Delete(
- *     path="/api/v1/admin/main/topBanner/delete/{id}",
+ *     path="/api/v1/admin/main/topBanners/delete/{id}",
  *     summary="메인 상단 배너 삭제",
  *     description="메인 상단 배너 삭제 endPoint",
  *     tags={"메인"},

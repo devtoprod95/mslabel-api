@@ -628,14 +628,14 @@
                 ]
             }
         },
-        "/api/v1/admin/main/topBanner/create": {
+        "/api/v1/admin/main/topBanners/create": {
             "post": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 상단 배너 생성",
                 "description": "메인 상단 배너 생성 endPoint",
-                "operationId": "5911012542f4a6c64cfdc4ccca2db931",
+                "operationId": "aa8e4f60e292a9534c556c59692bfe41",
                 "requestBody": {
                     "content": {
                         "multipart/form-data": {
@@ -694,14 +694,14 @@
                 ]
             }
         },
-        "/api/v1/admin/main/topBanner/edit/{id}": {
+        "/api/v1/admin/main/topBanners/edit/{id}": {
             "post": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 상단 배너 수정",
                 "description": "메인 상단 배너 수정 endPoint",
-                "operationId": "e3bd54e63a12b959ed1958932bec0b82",
+                "operationId": "8c7f701707561f99e930b0d41c61a95b",
                 "parameters": [
                     {
                         "name": "id",
@@ -771,14 +771,14 @@
                 ]
             }
         },
-        "/api/v1/admin/main/topBanner/delete/{id}": {
+        "/api/v1/admin/main/topBanners/delete/{id}": {
             "delete": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 상단 배너 삭제",
                 "description": "메인 상단 배너 삭제 endPoint",
-                "operationId": "d3efca51f878c4c000988b2398f9108e",
+                "operationId": "a8972dc05fc43410e1672b745d9a86b8",
                 "parameters": [
                     {
                         "name": "id",

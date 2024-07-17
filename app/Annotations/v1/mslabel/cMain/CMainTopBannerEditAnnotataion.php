@@ -48,7 +48,7 @@ namespace App\Annotations\v1\mslabel\cMain;
  * 
  * 
  * @OA\Post(
- *     path="/api/v1/admin/main/topBanner/edit/{id}",
+ *     path="/api/v1/admin/main/topBanners/edit/{id}",
  *     summary="메인 상단 배너 수정",
  *     description="메인 상단 배너 수정 endPoint",
  *     tags={"메인"},

@@ -48,7 +48,7 @@ namespace App\Annotations\v1\mslabel\cMain;
  * 
  * 
  * @OA\Post(
- *     path="/api/v1/admin/main/topBanner/create",
+ *     path="/api/v1/admin/main/topBanners/create",
  *     summary="메인 상단 배너 생성",
  *     description="메인 상단 배너 생성 endPoint",
  *     tags={"메인"},
