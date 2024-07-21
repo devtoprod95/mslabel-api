@@ -185,7 +185,6 @@ class MenuV1 extends MenuAbstract
             $id      = $params["id"];
             $groupId = $params["groupId"];
             $title   = $params["title"];
-            $type    = $params["type"];
             $rank    = $params["rank"];
 
             $obj = NoticeSubData::where("id", $id)->first();
@@ -196,7 +195,6 @@ class MenuV1 extends MenuAbstract
             NoticeSubData::where("id", $id)->update([
                 "group_id" => $groupId,
                 "title"    => $title,
-                "type"     => $type,
                 "rank"     => $rank,
             ]);
 

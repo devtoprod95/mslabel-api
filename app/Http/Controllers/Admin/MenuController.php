@@ -149,12 +149,10 @@ class MenuController extends Controller
             $validator = Validator::make($this->request->all(), [
                 'group_id' => 'required|int',
                 'title'    => 'required|string',
-                'type'     => 'required|string',
                 'rank'     => 'required|int',
             ], [
                 'group_id.required' => MenuErrorMessageConstant::getNotHaveErrorMessage("GROUP_ID"),
                 'title.required'    => MenuErrorMessageConstant::getNotHaveErrorMessage("SUB_TITLE"),
-                'type.required'     => MenuErrorMessageConstant::getNotHaveErrorMessage("SUB_TYPE"),
                 'rank.required'     => MenuErrorMessageConstant::getNotHaveErrorMessage("SUB_RANK"),
             ]);
             if ($validator->fails()) {
@@ -163,18 +161,12 @@ class MenuController extends Controller
             
             $groupId = $this->request->post("group_id");
             $title   = $this->request->post("title");
-            $type    = $this->request->post("type");
             $rank    = $this->request->post("rank");
-
-            if( !in_array($type, MenuConstant::SUB_TYPE_LIST) ){
-                throw new Exception(MenuErrorMessageConstant::getFitErrorMessage("SUB_TYPE"));
-            }
 
             $params = [
                 "id"      => $id,
                 "groupId" => $groupId,
                 "title"   => $title,
-                "type"    => $type,
                 "rank"    => $rank,
             ];
 

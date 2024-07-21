@@ -1748,7 +1748,6 @@
                 "required": [
                     "group_id",
                     "title",
-                    "type",
                     "rank"
                 ],
                 "properties": {
@@ -1761,11 +1760,6 @@
                         "description": "서브 메뉴 제목",
                         "type": "string",
                         "example": "한국 인쇄"
-                    },
-                    "type": {
-                        "description": "서브 메뉴 유형 image: 이미지, product: 상품, board: 게시판, editor: 에디터",
-                        "type": "string",
-                        "example": "image"
                     },
                     "rank": {
                         "description": "서브 메뉴 순서",

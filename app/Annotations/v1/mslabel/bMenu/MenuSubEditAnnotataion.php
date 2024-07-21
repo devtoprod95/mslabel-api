@@ -5,7 +5,7 @@ namespace App\Annotations\v1\mslabel\bMenu;
 /**
  * @OA\Schema(
  *     schema="MenuSubEditSchema",
- *     required={"group_id", "title", "type", "rank"},
+ *     required={"group_id", "title", "rank"},
  *     description="서브 메뉴 수정 스키마",
  *     @OA\Property(
  *         property="group_id",
@@ -18,12 +18,6 @@ namespace App\Annotations\v1\mslabel\bMenu;
  *         type="string",
  *         example="한국 인쇄",
  *         description="서브 메뉴 제목"
- *     ),
- *     @OA\Property(
- *         property="type",
- *         type="string",
- *         example="image",
- *         description="서브 메뉴 유형 image: 이미지, product: 상품, board: 게시판, editor: 에디터"
  *     ),
  *     @OA\Property(
  *         property="rank",
