@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\BoardController;
 use App\Http\Controllers\Admin\MainController as AdminMainController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -83,6 +83,14 @@ Route::name('v1.')->prefix('v1')->group(function () {
                     Route::patch("/edit/{id}", [AdminMenuController::class, "subEdit"])->name("subEdit");
                     /** 서브 메뉴 삭제 */
                     Route::delete("/delete/{id}", [AdminMenuController::class, "subDelete"])->name("subDelete");
+                });
+            });
+
+            /** 게시글 관련 */
+            Route::name('board.')->prefix('board')->group(function () {
+                Route::name('{type}.')->prefix('{type}')->group(function () {
+                    /** 게시판 생성 */
+                    Route::post("/create", [BoardController::class, "create"])->name("create");
                 });
             });
         });
