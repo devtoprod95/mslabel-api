@@ -1487,6 +1487,72 @@
                     }
                 ]
             }
+        },
+        "/api/v1/admin/board/product/create": {
+            "post": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "게시판 상품 유형 생성",
+                "description": "게시판 상품 유형 생성 endPoint",
+                "operationId": "83e4c90e34e4951de38a0db15f42e99b",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BoardProductCreateSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1969,6 +2035,94 @@
                         "description": "이미지 파일 (사이즈 293 x 581(px), 2MB 이하, 이미지 형식만 등록 가능)",
                         "type": "file",
                         "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "BoardProductCreateSchema": {
+                "description": "게시판 상품 유형 생성 스키마",
+                "required": [
+                    "sub_id",
+                    "title",
+                    "is_show",
+                    "desc",
+                    "main_img",
+                    "bottom_img1",
+                    "material",
+                    "size",
+                    "shape",
+                    "keywords"
+                ],
+                "properties": {
+                    "sub_id": {
+                        "description": "서브 메뉴 id",
+                        "type": "integer",
+                        "example": 9
+                    },
+                    "title": {
+                        "description": "제목",
+                        "type": "string",
+                        "example": "화장품 라벨"
+                    },
+                    "is_show": {
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "type": "string",
+                        "example": "Y"
+                    },
+                    "desc": {
+                        "description": "내용",
+                        "type": "string",
+                        "example": "별도의 후가공 없이도 처리가 되어보이는..."
+                    },
+                    "main_img": {
+                        "description": "이미지 파일 (사이즈 606 x 606(px), 2MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    },
+                    "bottom_img1": {
+                        "description": "이미지 파일 (사이즈 606 x 606(px), 5MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    },
+                    "bottom_img2": {
+                        "description": "이미지 파일 (사이즈 606 x 606(px), 5MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    },
+                    "bottom_img3": {
+                        "description": "이미지 파일 (사이즈 606 x 606(px), 5MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    },
+                    "bottom_img4": {
+                        "description": "이미지 파일 (사이즈 606 x 606(px), 5MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    },
+                    "bottom_img5": {
+                        "description": "이미지 파일 (사이즈 606 x 606(px), 5MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    },
+                    "material": {
+                        "description": "원단",
+                        "type": "string",
+                        "example": "별도의 후가공 없이도 처리가 되어보이는..."
+                    },
+                    "size": {
+                        "description": "사이즈",
+                        "type": "string",
+                        "example": "별도의 후가공 없이도 처리가 되어보이는..."
+                    },
+                    "shape": {
+                        "description": "형태",
+                        "type": "string",
+                        "example": "별도의 후가공 없이도 처리가 되어보이는..."
+                    },
+                    "keywords": {
+                        "description": "#OOO#OOO 형식입력",
+                        "type": "string",
+                        "example": "#화장품#매우 가벼움#키워드"
                     }
                 },
                 "type": "object"

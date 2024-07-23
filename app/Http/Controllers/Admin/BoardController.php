@@ -30,7 +30,6 @@ class BoardController extends Controller
                 $validator->validate();
             }
 
-
             $result = $this->boardService->create($type, $this->request);
             if( $result["isSuccess"] == true ){
                 return helpers_json_response(HttpConstant::OK, $result);

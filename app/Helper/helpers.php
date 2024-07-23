@@ -219,10 +219,10 @@ if (!function_exists('saveLocalImage')) {
      *
      * @param string $path 저장 경로
      * @param \Illuminate\Http\UploadedFile $file 업로드된 파일
-     * @param string $filename 저장할 파일명
+     * @param string $addFileName 저장할 파일명
      * @throws \Exception
      */
-    function saveLocalImage(UploadedFile $file, string $path): string
+    function saveLocalImage(UploadedFile $file, string $path, string $addFileName = ""): string
     {
         try {
             // 디렉토리가 존재하지 않으면 생성
@@ -235,6 +235,10 @@ if (!function_exists('saveLocalImage')) {
 
             // 파일 확장자 추출
             $extension = $file->getClientOriginalExtension();
+            if( $addFileName != "" ){
+                $uniqueFilename = $addFileName . "_" . $uniqueFilename;
+            }
+
             $filePath  = $path . '/' . $uniqueFilename . '.' . $extension;
 
             // 파일 저장
