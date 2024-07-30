@@ -9,6 +9,7 @@ use App\Constants\MenuConstant;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\BoardService;
 use App\Validators\BoardBoardValidator;
+use App\Validators\BoardEditorValidator;
 use App\Validators\BoardProductValidator;
 use Exception;
 use Illuminate\Http\Request;
@@ -33,6 +34,9 @@ class BoardController extends Controller
             } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
                 $validator = new BoardBoardValidator($this->request);
                 $validator->validate();
+            } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
+                $validator = new BoardEditorValidator($this->request);
+                $validator->validate();
             } else {
                 throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
             }
@@ -56,6 +60,9 @@ class BoardController extends Controller
                 $validator->validate();
             } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
                 $validator = new BoardBoardValidator($this->request);
+                $validator->validate();
+            } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
+                $validator = new BoardEditorValidator($this->request);
                 $validator->validate();
             } else {
                 throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));

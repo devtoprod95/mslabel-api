@@ -4,7 +4,9 @@ namespace App\Abstracts\Admin;
 
 use App\Constants\BoardErrorMessageConstant;
 use App\Constants\MenuConstant;
+use App\DTOs\Board\BoardEditorDto;
 use App\DTOs\Board\BoardProductDto;
+use App\Models\BoardEditorData;
 use App\Models\BoardProductData;
 use App\Models\NoticeSubData;
 use Carbon\Carbon;
@@ -34,6 +36,10 @@ abstract class BoardAbstract
         try {
             if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
                 $result = $this->createProduct($request);
+            } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
+                $result = $this->createEditor($request);
+            } else {
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
             }
 
             if( $result["isSuccess"] !== true ){
@@ -63,6 +69,10 @@ abstract class BoardAbstract
         try {
             if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
                 $result = $this->editProduct($id, $request);
+            } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
+                $result = $this->editEditor($id, $request);
+            } else {
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
             }
 
             if( $result["isSuccess"] !== true ){
@@ -159,10 +169,57 @@ abstract class BoardAbstract
                 'keywords'    => $keywords,
             ];
 
-            $boardProductDto = new BoardProductDto();
-            $boardProductDto->bind($bindParam);
+            $boardDto = new BoardProductDto();
+            $boardDto->bind($bindParam);
 
-            $obj = BoardProductData::create($boardProductDto->getAllProperties());
+            $obj = BoardProductData::create($boardDto->getAllProperties());
+            
+            $returnMsg = helpers_success_message($obj->toArray());
+        } catch (Exception $e) {
+            $returnMsg = helpers_fail_message($e->getMessage());
+        }
+
+        return $returnMsg;
+    }
+
+    protected function createEditor(Request $request): array
+    {
+        $returnMsg = $this->returnMsg;
+
+        try {
+            $sub_id          = $request->post('sub_id');
+            $title           = $request->post('title');
+            $is_show         = $request->post('is_show');
+            $desc            = $request->post('desc');
+            $show_started_at = Carbon::parse($request->post('show_started_at'))->format('Y-m-d');
+            $show_ended_at   = Carbon::parse($request->post('show_ended_at'))->format('Y-m-d');
+            $image           = $request->file('image');
+
+            $obj = NoticeSubData::where("id", $sub_id)->first();
+            if( $obj == null ){
+                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("SUB_MENU"));
+            }
+            $group_id  = $obj->group_id;
+            $date_name = Carbon::now()->format("Y/m/d");
+
+            $path       = "board/editor/{$date_name}";
+            $saved_path = saveLocalImage($image, $path);
+
+            $bindParam = [
+                'group_id'        => $group_id,
+                'sub_id'          => $sub_id,
+                'title'           => $title,
+                'is_show'         => $is_show,
+                'desc'            => $desc,
+                'image'           => $saved_path,
+                'show_started_at' => $show_started_at,
+                'show_ended_at'   => $show_ended_at,
+            ];
+
+            $boardDto = new BoardEditorDto();
+            $boardDto->bind($bindParam);
+
+            $obj = BoardEditorData::create($boardDto->getAllProperties());
             
             $returnMsg = helpers_success_message($obj->toArray());
         } catch (Exception $e) {
@@ -259,12 +316,12 @@ abstract class BoardAbstract
                 'keywords'    => $keywords,
             ];
 
-            $boardProductDto = new BoardProductDto();
-            $boardProductDto->bind($bindParam);
+            $boardDto = new BoardProductDto();
+            $boardDto->bind($bindParam);
 
-            $obj = BoardProductData::create($boardProductDto->getAllProperties());
+            $boardObj->update($boardDto->getAllProperties());
             
-            $returnMsg = helpers_success_message($obj->toArray());
+            $returnMsg = helpers_success_message($boardObj->toArray());
         } catch (Exception $e) {
             $returnMsg = helpers_fail_message($e->getMessage());
         }
@@ -284,6 +341,62 @@ abstract class BoardAbstract
             if ($boardObj->bottom_img5) {
                 deleteLocalFile($boardObj->bottom_img5);
             }
+        }
+
+        return $returnMsg;
+    }
+
+    protected function editEditor(int $id, Request $request): array
+    {
+        $returnMsg = $this->returnMsg;
+
+        try {
+            $sub_id          = $request->post('sub_id');
+            $title           = $request->post('title');
+            $is_show         = $request->post('is_show');
+            $desc            = $request->post('desc');
+            $show_started_at = Carbon::parse($request->post('show_started_at'))->format('Y-m-d');
+            $show_ended_at   = Carbon::parse($request->post('show_ended_at'))->format('Y-m-d');
+            $image           = $request->file('image');
+
+            $boardObj = BoardEditorData::where("id", $id)->first();
+            if( $boardObj == null ){
+                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("BOARD"));
+            }
+
+            $obj = NoticeSubData::where("id", $sub_id)->first();
+            if( $obj == null ){
+                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("SUB_MENU"));
+            }
+            $group_id  = $obj->group_id;
+            $date_name = Carbon::now()->format("Y/m/d");
+
+            $path       = "board/editor/{$date_name}";
+            $saved_path = saveLocalImage($image, $path);
+
+            $bindParam = [
+                'group_id'        => $group_id,
+                'sub_id'          => $sub_id,
+                'title'           => $title,
+                'is_show'         => $is_show,
+                'desc'            => $desc,
+                'image'           => $saved_path,
+                'show_started_at' => $show_started_at,
+                'show_ended_at'   => $show_ended_at,
+            ];
+
+            $boardDto = new BoardEditorDto();
+            $boardDto->bind($bindParam);
+
+            $boardObj->update($boardDto->getAllProperties());
+
+            $returnMsg = helpers_success_message($boardObj->toArray());
+        } catch (Exception $e) {
+            $returnMsg = helpers_fail_message($e->getMessage());
+        }
+
+        if( $returnMsg["isSuccess"] === true ){
+            deleteLocalFile($boardObj->image);
         }
 
         return $returnMsg;

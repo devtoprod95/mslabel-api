@@ -1630,6 +1630,149 @@
                     }
                 ]
             }
+        },
+        "/api/v1/admin/board/editor/create": {
+            "post": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "에디터 유형 생성",
+                "description": "에디터 유형 생성 endPoint",
+                "operationId": "3fd130af79e623784fd570b5779be444",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BoardEditorCreateSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/board/editor/edit/{id}": {
+            "post": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "에디터 유형 수정",
+                "description": "에디터 유형 수정 endPoint",
+                "operationId": "832b0e076a4cb684a89c252a9359e7f8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "게시판 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BoardEditorEditSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -2288,6 +2431,106 @@
                         "description": "#OOO#OOO 형식입력",
                         "type": "string",
                         "example": "#화장품#매우 가벼움#키워드"
+                    }
+                },
+                "type": "object"
+            },
+            "BoardEditorCreateSchema": {
+                "description": "에디터 유형 생성 스키마",
+                "required": [
+                    "sub_id",
+                    "title",
+                    "is_show",
+                    "desc",
+                    "image",
+                    "show_started_at",
+                    "show_ended_at"
+                ],
+                "properties": {
+                    "sub_id": {
+                        "description": "서브 메뉴 id",
+                        "type": "integer",
+                        "example": 9
+                    },
+                    "title": {
+                        "description": "제목",
+                        "type": "string",
+                        "example": "화장품 라벨"
+                    },
+                    "is_show": {
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "type": "string",
+                        "example": "Y"
+                    },
+                    "desc": {
+                        "description": "내용",
+                        "type": "string",
+                        "example": "별도의 후가공 없이도 처리가 되어보이는..."
+                    },
+                    "image": {
+                        "description": "이미지 파일 (사이즈 600 x 600(px), 2MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    },
+                    "show_started_at": {
+                        "description": "노출 시작일",
+                        "type": "string",
+                        "example": "2024-01-01"
+                    },
+                    "show_ended_at": {
+                        "description": "노출 종료일",
+                        "type": "string",
+                        "example": "2024-07-31"
+                    }
+                },
+                "type": "object"
+            },
+            "BoardEditorEditSchema": {
+                "description": "에디터 유형 수정 스키마",
+                "required": [
+                    "sub_id",
+                    "title",
+                    "is_show",
+                    "desc",
+                    "image",
+                    "show_started_at",
+                    "show_ended_at"
+                ],
+                "properties": {
+                    "sub_id": {
+                        "description": "서브 메뉴 id",
+                        "type": "integer",
+                        "example": 9
+                    },
+                    "title": {
+                        "description": "제목",
+                        "type": "string",
+                        "example": "화장품 라벨"
+                    },
+                    "is_show": {
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "type": "string",
+                        "example": "Y"
+                    },
+                    "desc": {
+                        "description": "내용",
+                        "type": "string",
+                        "example": "별도의 후가공 없이도 처리가 되어보이는..."
+                    },
+                    "image": {
+                        "description": "이미지 파일 (사이즈 600 x 600(px), 2MB 이하, 이미지 형식만 등록 가능)",
+                        "type": "file",
+                        "example": ""
+                    },
+                    "show_started_at": {
+                        "description": "노출 시작일",
+                        "type": "string",
+                        "example": "2024-01-01"
+                    },
+                    "show_ended_at": {
+                        "description": "노출 종료일",
+                        "type": "string",
+                        "example": "2024-07-31"
                     }
                 },
                 "type": "object"
