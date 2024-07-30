@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\BoardErrorMessageConstant;
 use Illuminate\Http\JsonResponse;
 use App\Constants\HttpConstant;
 use App\Constants\MenuConstant;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\BoardService;
+use App\Validators\BoardBoardValidator;
 use App\Validators\BoardProductValidator;
 use Exception;
 use Illuminate\Http\Request;
@@ -28,6 +30,11 @@ class BoardController extends Controller
             if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
                 $validator = new BoardProductValidator($this->request);
                 $validator->validate();
+            } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
+                $validator = new BoardBoardValidator($this->request);
+                $validator->validate();
+            } else {
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
             }
 
             $result = $this->boardService->create($type, $this->request);
@@ -47,6 +54,11 @@ class BoardController extends Controller
             if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
                 $validator = new BoardProductValidator($this->request);
                 $validator->validate();
+            } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
+                $validator = new BoardBoardValidator($this->request);
+                $validator->validate();
+            } else {
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
             }
 
             $result = $this->boardService->edit($type, $id, $this->request);
