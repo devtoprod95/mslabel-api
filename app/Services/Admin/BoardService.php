@@ -20,4 +20,9 @@ class BoardService
     {
         return $this->boardAbstract->create($type, $request);
     }
+
+    public function edit(string $type, int $id, Request $request): array
+    {
+        return $this->boardAbstract->edit($type, $id, $request);
+    }
 }

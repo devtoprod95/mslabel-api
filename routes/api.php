@@ -91,6 +91,8 @@ Route::name('v1.')->prefix('v1')->group(function () {
                 Route::name('{type}.')->prefix('{type}')->group(function () {
                     /** 게시판 생성 */
                     Route::post("/create", [BoardController::class, "create"])->name("create");
+                    /** 게시판 수정 */
+                    Route::post("/edit/{id}", [BoardController::class, "edit"])->name("edit");
                 });
             });
         });

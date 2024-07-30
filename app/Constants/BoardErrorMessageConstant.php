@@ -23,6 +23,7 @@ class BoardErrorMessageConstant
     public const ERROR_MESSAGE_KEYWORDS     = "키워드";
     public const ERROR_MESSAGE_MAIN_MENU    = "메인 메뉴";
     public const ERROR_MESSAGE_SUB_MENU     = "서브 메뉴";
+    public const ERROR_MESSAGE_BOARD        = "게시판";
     public const ERROR_MESSAGE_IMG_TYPE     = "이미지 타입";
     public const ERROR_MESSAGE_IMG_SIZE_2MB = "2MB 이하 이미지만 업로드 가능";
     public const ERROR_MESSAGE_IMG_SIZE_5MB = "5MB 이하 이미지만 업로드 가능";

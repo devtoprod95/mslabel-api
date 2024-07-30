@@ -7,7 +7,7 @@ namespace App\Annotations\v1\mslabel\dBoard;
  * @OA\Schema(
  *     schema="BoardProductCreateSchema",
  *     required={"sub_id", "title", "is_show", "desc", "main_img", "bottom_img1", "material", "size", "shape", "keywords"},
- *     description="게시판 상품 유형 생성 스키마",
+ *     description="상품 유형 생성 스키마",
  *     @OA\Property(
  *         property="sub_id",
  *         type="integer",
@@ -71,19 +71,19 @@ namespace App\Annotations\v1\mslabel\dBoard;
  *     @OA\Property(
  *         property="material",
  *         type="string",
- *         example="별도의 후가공 없이도 처리가 되어보이는...",
+ *         example="강철소재",
  *         description="원단"
  *     ),
  *     @OA\Property(
  *         property="size",
  *         type="string",
- *         example="별도의 후가공 없이도 처리가 되어보이는...",
+ *         example="300x200",
  *         description="사이즈"
  *     ),
  *     @OA\Property(
  *         property="shape",
  *         type="string",
- *         example="별도의 후가공 없이도 처리가 되어보이는...",
+ *         example="동그라미",
  *         description="형태"
  *     ),
  *     @OA\Property(
@@ -97,8 +97,8 @@ namespace App\Annotations\v1\mslabel\dBoard;
  * 
  * @OA\Post(
  *     path="/api/v1/admin/board/product/create",
- *     summary="게시판 상품 유형 생성",
- *     description="게시판 상품 유형 생성 endPoint",
+ *     summary="상품 유형 생성",
+ *     description="상품 유형 생성 endPoint",
  *     tags={"게시판"},
  *     security={{"BearerAuth": {}}},
  *     @OA\RequestBody(
@@ -130,5 +130,5 @@ namespace App\Annotations\v1\mslabel\dBoard;
  * )
 */
 
-class ABoardProductCreateAnnotataion{
+class A1BoardProductCreateAnnotataion{
 }
