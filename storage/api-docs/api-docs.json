@@ -695,13 +695,13 @@
             }
         },
         "/api/v1/admin/main/topBanners/edit/{id}": {
-            "post": {
+            "patch": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 상단 배너 수정",
                 "description": "메인 상단 배너 수정 endPoint",
-                "operationId": "8c7f701707561f99e930b0d41c61a95b",
+                "operationId": "7019524236318ac16654011dd2a9646a",
                 "parameters": [
                     {
                         "name": "id",
@@ -1018,13 +1018,13 @@
             }
         },
         "/api/v1/admin/main/intro/edit/{id}": {
-            "post": {
+            "patch": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 소개 수정",
                 "description": "메인 소개 수정 endPoint",
-                "operationId": "fecad2209fe60ee6281fdb369d2b3d63",
+                "operationId": "5c24ef3dd5ef160f1dc53533e919e7b9",
                 "parameters": [
                     {
                         "name": "id",
@@ -1341,13 +1341,13 @@
             }
         },
         "/api/v1/admin/main/intro2/edit/{id}": {
-            "post": {
+            "patch": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 소개2 수정",
                 "description": "메인 소개2 수정 endPoint",
-                "operationId": "4ffcc4ff5591a1e613033b265679b22a",
+                "operationId": "b058a0a4e025edba3b60d8d96e2dc1a0",
                 "parameters": [
                     {
                         "name": "id",
@@ -1555,13 +1555,13 @@
             }
         },
         "/api/v1/admin/board/product/edit/{id}": {
-            "post": {
+            "patch": {
                 "tags": [
                     "게시판"
                 ],
                 "summary": "상품 유형 수정",
                 "description": "상품 유형 수정 endPoint",
-                "operationId": "32479d6d904ecbbeb9cde0b1df6d430f",
+                "operationId": "60ac603adfacf490bc513d94b9599ca9",
                 "parameters": [
                     {
                         "name": "id",
@@ -1698,13 +1698,13 @@
             }
         },
         "/api/v1/admin/board/editor/edit/{id}": {
-            "post": {
+            "patch": {
                 "tags": [
                     "게시판"
                 ],
                 "summary": "에디터 유형 수정",
                 "description": "에디터 유형 수정 endPoint",
-                "operationId": "832b0e076a4cb684a89c252a9359e7f8",
+                "operationId": "7e7ad0b9978aefc07c887fcd1cf96e75",
                 "parameters": [
                     {
                         "name": "id",
@@ -1721,6 +1721,72 @@
                         "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/BoardEditorEditSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/board/board/create": {
+            "post": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "게시판 유형 생성",
+                "description": "게시판 유형 생성 endPoint",
+                "operationId": "516549f7a28c1194339b3355f164d19c",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BoardBoardCreateSchema"
                             }
                         }
                     }
@@ -2531,6 +2597,104 @@
                         "description": "노출 종료일",
                         "type": "string",
                         "example": "2024-07-31"
+                    }
+                },
+                "type": "object"
+            },
+            "BoardBoardCreateSchema": {
+                "description": "게시판 유형 생성 스키마",
+                "required": [
+                    "sub_id",
+                    "company",
+                    "title",
+                    "contact_name",
+                    "contact_email",
+                    "contact_phone",
+                    "password",
+                    "mapping_categories",
+                    "size",
+                    "purpose",
+                    "material",
+                    "shape",
+                    "quantity",
+                    "desc",
+                    "etc_file"
+                ],
+                "properties": {
+                    "sub_id": {
+                        "description": "서브 메뉴 id",
+                        "type": "integer",
+                        "example": 12
+                    },
+                    "company": {
+                        "description": "회사명",
+                        "type": "string",
+                        "example": "유니클로"
+                    },
+                    "title": {
+                        "description": "제목",
+                        "type": "string",
+                        "example": "테스트 제목"
+                    },
+                    "contact_name": {
+                        "description": "담당자 성명",
+                        "type": "string",
+                        "example": "홍길동"
+                    },
+                    "contact_email": {
+                        "description": "담당자 이메일",
+                        "type": "string",
+                        "example": "devtoproduction@gmail.com"
+                    },
+                    "contact_phone": {
+                        "description": "담당자 번호",
+                        "type": "string",
+                        "example": "010-1234-5678"
+                    },
+                    "password": {
+                        "description": "비밀번호",
+                        "type": "string",
+                        "example": "1234"
+                    },
+                    "mapping_categories": {
+                        "description": "카테고리 번호 1: 라벨 인쇄, 2: 디지털 인쇄, 3: 파우치 인쇄, 4: 상담 후 결정",
+                        "type": "string",
+                        "example": "1,2,3"
+                    },
+                    "size": {
+                        "description": "제품 규격",
+                        "type": "string",
+                        "example": "100mm x 100mm x 100mm"
+                    },
+                    "purpose": {
+                        "description": "제품 용도",
+                        "type": "string",
+                        "example": "화장품 부착 라벨"
+                    },
+                    "material": {
+                        "description": "원단 및 코딩 여부",
+                        "type": "string",
+                        "example": "유포지"
+                    },
+                    "shape": {
+                        "description": "가공 형태",
+                        "type": "string",
+                        "example": "롤"
+                    },
+                    "quantity": {
+                        "description": "수량",
+                        "type": "string",
+                        "example": "10만"
+                    },
+                    "desc": {
+                        "description": "기타 문의사항",
+                        "type": "string",
+                        "example": "테스트 기타 사항"
+                    },
+                    "etc_file": {
+                        "description": "파일 5MB 이하",
+                        "type": "file",
+                        "example": ""
                     }
                 },
                 "type": "object"

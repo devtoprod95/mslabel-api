@@ -4,8 +4,12 @@ namespace App\Abstracts\Admin;
 
 use App\Constants\BoardErrorMessageConstant;
 use App\Constants\MenuConstant;
+use App\DTOs\Board\BoardBoardDto;
 use App\DTOs\Board\BoardEditorDto;
 use App\DTOs\Board\BoardProductDto;
+use App\Models\BoardBoardData;
+use App\Models\BoardCategoryData;
+use App\Models\BoardCategoryMapping;
 use App\Models\BoardEditorData;
 use App\Models\BoardProductData;
 use App\Models\NoticeSubData;
@@ -34,8 +38,19 @@ abstract class BoardAbstract
         $returnMsg = $this->returnMsg;
 
         try {
+            $sub_id = $request->post('sub_id');
+            $obj    = NoticeSubData::where("id", $sub_id)->first();
+            if( $obj == null ){
+                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("SUB_MENU"));
+            }
+            if( $type != $obj->type ){
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("SUB_TYPE"));
+            }
+
             if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
                 $result = $this->createProduct($request);
+            } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
+                $result = $this->createBoard($request);
             } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
                 $result = $this->createEditor($request);
             } else {
@@ -67,6 +82,15 @@ abstract class BoardAbstract
         $returnMsg = $this->returnMsg;
 
         try {
+            $sub_id = $request->post('sub_id');
+            $obj    = NoticeSubData::where("id", $sub_id)->first();
+            if( $obj == null ){
+                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("SUB_MENU"));
+            }
+            if( $type != $obj->type ){
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("SUB_TYPE"));
+            }
+
             if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
                 $result = $this->editProduct($id, $request);
             } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
@@ -107,11 +131,7 @@ abstract class BoardAbstract
             $shape        = $request->post('shape');
             $keywords     = $request->post('keywords');
 
-            $obj = NoticeSubData::where("id", $sub_id)->first();
-            if( $obj == null ){
-                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("SUB_MENU"));
-            }
-
+            $obj       = NoticeSubData::where("id", $sub_id)->first();
             $group_id  = $obj->group_id;
             $date_name = Carbon::now()->format("Y/m/d");
 
@@ -195,10 +215,7 @@ abstract class BoardAbstract
             $show_ended_at   = Carbon::parse($request->post('show_ended_at'))->format('Y-m-d');
             $image           = $request->file('image');
 
-            $obj = NoticeSubData::where("id", $sub_id)->first();
-            if( $obj == null ){
-                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("SUB_MENU"));
-            }
+            $obj       = NoticeSubData::where("id", $sub_id)->first();
             $group_id  = $obj->group_id;
             $date_name = Carbon::now()->format("Y/m/d");
 
@@ -221,6 +238,80 @@ abstract class BoardAbstract
 
             $obj = BoardEditorData::create($boardDto->getAllProperties());
             
+            $returnMsg = helpers_success_message($obj->toArray());
+        } catch (Exception $e) {
+            $returnMsg = helpers_fail_message($e->getMessage());
+        }
+
+        return $returnMsg;
+    }
+
+    protected function createBoard(Request $request): array
+    {
+        $returnMsg = $this->returnMsg;
+
+        try {
+            $sub_id             = $request->post("sub_id");
+            $company            = $request->post("company");
+            $title              = $request->post("title");
+            $contact_name       = $request->post("contact_name");
+            $contact_email      = $request->post("contact_email");
+            $contact_phone      = $request->post("contact_phone");
+            $password           = $request->post("password");
+            $mapping_categories = explode(",", $request->post("mapping_categories"));
+            $size               = $request->post("size");
+            $purpose            = $request->post("purpose");
+            $material           = $request->post("material");
+            $shape              = $request->post("shape");
+            $quantity           = $request->post("quantity");
+            $desc               = $request->post("desc");
+            $etc_file           = $request->file("etc_file");
+
+            $cateIds            = BoardCategoryData::whereIn("id", $mapping_categories)->pluck("id")->toArray();
+            $mapping_categories = array_map('intval', $mapping_categories);
+
+            sort($cateIds);
+            sort($mapping_categories);
+            if ($mapping_categories !== $cateIds) {
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("CATE_TYPE"));
+            }
+
+            $obj       = NoticeSubData::where("id", $sub_id)->first();
+            $group_id  = $obj->group_id;
+            $date_name = Carbon::now()->format("Y/m/d");
+
+            $path       = "board/board/{$date_name}";
+            $saved_path = saveLocalFile($etc_file, $path);
+
+            $bindParam = [
+                'group_id'      => $group_id,
+                'sub_id'        => $sub_id,
+                'company'       => $company,
+                'title'         => $title,
+                'contact_name'  => $contact_name,
+                'contact_email' => $contact_email,
+                'contact_phone' => $contact_phone,
+                'password'      => $password,
+                'size'          => $size,
+                'purpose'       => $purpose,
+                'material'      => $material,
+                'shape'         => $shape,
+                'quantity'      => $quantity,
+                'desc'          => $desc,
+                'etc_file'      => $saved_path,
+            ];
+
+            $boardDto = new BoardBoardDto();
+            $boardDto->bind($bindParam);
+
+            $obj = BoardBoardData::create($boardDto->getAllProperties());
+            foreach ($mapping_categories as $category) {
+                BoardCategoryMapping::create([
+                    "board_id"    => $obj->id,
+                    "category_id" => $category,
+                ]);
+            }
+
             $returnMsg = helpers_success_message($obj->toArray());
         } catch (Exception $e) {
             $returnMsg = helpers_fail_message($e->getMessage());
@@ -254,11 +345,7 @@ abstract class BoardAbstract
                 throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("BOARD"));
             }
 
-            $obj = NoticeSubData::where("id", $sub_id)->first();
-            if( $obj == null ){
-                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("SUB_MENU"));
-            }
-
+            $obj       = NoticeSubData::where("id", $sub_id)->first();
             $group_id  = $obj->group_id;
             $date_name = Carbon::now()->format("Y/m/d");
 
@@ -364,10 +451,7 @@ abstract class BoardAbstract
                 throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("BOARD"));
             }
 
-            $obj = NoticeSubData::where("id", $sub_id)->first();
-            if( $obj == null ){
-                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("SUB_MENU"));
-            }
+            $obj       = NoticeSubData::where("id", $sub_id)->first();
             $group_id  = $obj->group_id;
             $date_name = Carbon::now()->format("Y/m/d");
 

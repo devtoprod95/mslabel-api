@@ -33,7 +33,7 @@ Route::name('v1.')->prefix('v1')->group(function () {
                     /** 상단 배너 등록 */
                     Route::post("/create", [AdminMainController::class, "topBannerCreate"])->name("create");
                     /** 상단 배너 수정 */
-                    Route::post("/edit/{id}", [AdminMainController::class, "topBannerEdit"])->name("edit");
+                    Route::patch("/edit/{id}", [AdminMainController::class, "topBannerEdit"])->name("edit");
                     /** 상단 배너 삭제 */
                     Route::delete("/delete/{id}", [AdminMainController::class, "topBannerDelete"])->name("delete");
                 });
@@ -45,7 +45,7 @@ Route::name('v1.')->prefix('v1')->group(function () {
                     /** 소개 등록 */
                     Route::post("/create", [AdminMainController::class, "introCreate"])->name("create");
                     /** 소개 수정 */
-                    Route::post("/edit/{id}", [AdminMainController::class, "introEdit"])->name("edit");
+                    Route::patch("/edit/{id}", [AdminMainController::class, "introEdit"])->name("edit");
                     /** 소개 삭제 */
                     Route::delete("/delete/{id}", [AdminMainController::class, "introDelete"])->name("delete");
                 });
@@ -57,7 +57,7 @@ Route::name('v1.')->prefix('v1')->group(function () {
                     /** 소개 등록 */
                     Route::post("/create", [AdminMainController::class, "intro2Create"])->name("create");
                     /** 소개 수정 */
-                    Route::post("/edit/{id}", [AdminMainController::class, "intro2Edit"])->name("edit");
+                    Route::patch("/edit/{id}", [AdminMainController::class, "intro2Edit"])->name("edit");
                     /** 소개 삭제 */
                     Route::delete("/delete/{id}", [AdminMainController::class, "intro2Delete"])->name("delete");
                 });
@@ -92,7 +92,7 @@ Route::name('v1.')->prefix('v1')->group(function () {
                     /** 게시판 생성 */
                     Route::post("/create", [BoardController::class, "create"])->name("create");
                     /** 게시판 수정 */
-                    Route::post("/edit/{id}", [BoardController::class, "edit"])->name("edit");
+                    Route::patch("/edit/{id}", [BoardController::class, "edit"])->name("edit");
                 });
             });
         });
