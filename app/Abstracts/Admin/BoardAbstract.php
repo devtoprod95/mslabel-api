@@ -2,6 +2,7 @@
 
 namespace App\Abstracts\Admin;
 
+use App\Constants\BoardConstant;
 use App\Constants\BoardErrorMessageConstant;
 use App\Constants\MenuConstant;
 use App\DTOs\Board\BoardBoardDto;
@@ -24,6 +25,102 @@ abstract class BoardAbstract
     public function __construct()
     {
         $this->returnMsg = helpers_fail_message();
+    }
+
+    /**
+     * @func list
+     * @description '게시판 리스트'
+     * @param string $type
+     * @param Request $request
+     * @return array
+     */
+    public function list(string $type, Request $request): array
+    {
+        $returnMsg = $this->returnMsg;
+
+        try {
+            $groupId    = $request->get("group_id");
+            $subId      = $request->get("sub_id");
+            $isShow     = $request->get("is_show", "");
+            $searchCls  = $request->get("search_cls", "");
+            $keyword    = $request->get("keyword", "");
+            $categories = explode(",", $request->get("categories", ""));
+            $isReply    = $request->get("is_reply", "");
+            $page       = $request->get("page", 1);
+            $pageSize   = $request->get("page_size", 20);
+            $sortArr    = explode("|", $request->get("sort", "created_at|desc"));
+
+            if( $pageSize > 20 ) $pageSize = 20;
+
+            if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
+                $builder = BoardProductData::where([
+                    "group_id" => $groupId,
+                    "sub_id"   => $subId,
+                ]);
+
+                if( !empty($isShow) ){
+                    $builder->where("is_show", $isShow);
+                }
+            } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
+                $builder = BoardBoardData::with(["categories"])->where([
+                    "group_id" => $groupId,
+                    "sub_id"   => $subId,
+                ]);
+
+                if( !empty($isReply) ){
+                    $builder->where("is_reply", $isReply);
+                }
+                if( !empty($categories) ){
+                    foreach ($categories as $category) {
+                        if( $category ){
+                            $builder->whereHas('categories', function ($query) use ($category) {
+                                $query->where('board_category_datas.id', $category);
+                            });
+                        }
+                    }
+                }
+            } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
+                $builder = BoardEditorData::where([
+                    "group_id" => $groupId,
+                    "sub_id"   => $subId,
+                ]);
+
+                if( !empty($isShow) ){
+                    $builder->where("is_show", $isShow);
+                }
+            } else {
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
+            }
+
+            if( !empty($keyword) ){
+                if( $searchCls == "title"){
+                    $builder->where($searchCls, "like", "%" . $keyword . "%");
+                } else if( $searchCls == "desc"){
+                    $builder->where($searchCls, "like", "%" . $keyword . "%");
+                }
+            }
+
+            $builder->orderBy($sortArr[0], $sortArr[1]);
+
+            $lists        = $builder->paginate($pageSize, ['*'], 'page', $page);
+            $totalRecords = $lists->total();
+            $lastPage     = $lists->lastPage();
+            $objs         = $lists->items();
+
+            $result = [
+                "total_records" => $totalRecords,
+                "last_page"     => $lastPage,
+                "records"       => $objs,
+                "page"          => (int)$page,
+                "page_size"     => (int)$pageSize
+            ];
+
+            $returnMsg = helpers_success_message($result);
+        } catch (Exception $e) {
+            $returnMsg = helpers_fail_message($e->getMessage());
+        }
+
+        return $returnMsg;
     }
 
     /**
@@ -288,6 +385,7 @@ abstract class BoardAbstract
                 'sub_id'        => $sub_id,
                 'company'       => $company,
                 'title'         => $title,
+                'is_reply'      => BoardConstant::IS_REPLY_N,
                 'contact_name'  => $contact_name,
                 'contact_email' => $contact_email,
                 'contact_phone' => $contact_phone,

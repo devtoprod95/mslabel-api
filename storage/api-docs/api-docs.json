@@ -1488,6 +1488,145 @@
                 ]
             }
         },
+        "/api/v1/admin/board/product": {
+            "get": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "상품 유형 리스트",
+                "description": "상품 유형 리스트 endPoint",
+                "operationId": "4a2b50dac30f01458ecc130fb347a086",
+                "parameters": [
+                    {
+                        "name": "group_id",
+                        "in": "query",
+                        "description": "대표 메뉴 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "sub_id",
+                        "in": "query",
+                        "description": "서브 메뉴 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "페이지 수",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "페이징 사이즈 Max 20",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "정렬 created_at: 생성일, updated_at: 수정일 / desc: 내림차순, asc: 오름차순",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "created_at|desc"
+                        }
+                    },
+                    {
+                        "name": "is_show",
+                        "in": "query",
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "search_cls",
+                        "in": "query",
+                        "description": "검색 분류 title: 제목, desc: 상세",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "검색어",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/admin/board/product/create": {
             "post": {
                 "tags": [
@@ -1631,6 +1770,370 @@
                 ]
             }
         },
+        "/api/v1/admin/board/board": {
+            "get": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "게시판 유형 리스트",
+                "description": "게시판 유형 리스트 endPoint",
+                "operationId": "9f5b65a385d221f28a903a28c83fadbd",
+                "parameters": [
+                    {
+                        "name": "group_id",
+                        "in": "query",
+                        "description": "대표 메뉴 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "sub_id",
+                        "in": "query",
+                        "description": "서브 메뉴 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "페이지 수",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "페이징 사이즈 Max 20",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "정렬 created_at: 생성일, updated_at: 수정일 / desc: 내림차순, asc: 오름차순",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "created_at|desc"
+                        }
+                    },
+                    {
+                        "name": "is_reply",
+                        "in": "query",
+                        "description": "답변 여부 Y: 답변완료, N: 답변미완료",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "is_reply",
+                        "in": "query",
+                        "description": "답변 여부 Y: 답변완료, N: 답변미완료",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "categories",
+                        "in": "query",
+                        "description": "카테고리 분류 1: 라벨 인쇄, 2: 디지털 인쇄, 3: 파우치 인쇄, 4: 상담 후 결정 ( 콤마로 여러 검색가능 ex: 1,2,3 )",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "search_cls",
+                        "in": "query",
+                        "description": "검색 분류 title: 제목, desc: 상세",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "검색어",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/board/board/create": {
+            "post": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "게시판 유형 생성",
+                "description": "게시판 유형 생성 endPoint",
+                "operationId": "e863b40726b8de08416bfe9636edf035",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BoardBoardCreateSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/board/editor": {
+            "get": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "에디터 유형 리스트",
+                "description": "에디터 유형 리스트 endPoint",
+                "operationId": "b58c242257f5e69f7ae4e27f167120eb",
+                "parameters": [
+                    {
+                        "name": "group_id",
+                        "in": "query",
+                        "description": "대표 메뉴 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "sub_id",
+                        "in": "query",
+                        "description": "서브 메뉴 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "페이지 수",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "description": "페이징 사이즈 Max 20",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "정렬 created_at: 생성일, updated_at: 수정일 / desc: 내림차순, asc: 오름차순",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "created_at|desc"
+                        }
+                    },
+                    {
+                        "name": "is_show",
+                        "in": "query",
+                        "description": "노출 여부 Y: 노출, N: 비노출",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "search_cls",
+                        "in": "query",
+                        "description": "검색 분류 title: 제목, desc: 상세",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "검색어",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/admin/board/editor/create": {
             "post": {
                 "tags": [
@@ -1721,72 +2224,6 @@
                         "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/BoardEditorEditSchema"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SuccessResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authorization Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/401ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/400ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/500ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/admin/board/board/create": {
-            "post": {
-                "tags": [
-                    "게시판"
-                ],
-                "summary": "게시판 유형 생성",
-                "description": "게시판 유형 생성 endPoint",
-                "operationId": "516549f7a28c1194339b3355f164d19c",
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/BoardBoardCreateSchema"
                             }
                         }
                     }
@@ -2501,6 +2938,104 @@
                 },
                 "type": "object"
             },
+            "BoardBoardCreateSchema": {
+                "description": "게시판 유형 생성 스키마",
+                "required": [
+                    "sub_id",
+                    "company",
+                    "title",
+                    "contact_name",
+                    "contact_email",
+                    "contact_phone",
+                    "password",
+                    "mapping_categories",
+                    "size",
+                    "purpose",
+                    "material",
+                    "shape",
+                    "quantity",
+                    "desc",
+                    "etc_file"
+                ],
+                "properties": {
+                    "sub_id": {
+                        "description": "서브 메뉴 id",
+                        "type": "integer",
+                        "example": 12
+                    },
+                    "company": {
+                        "description": "회사명",
+                        "type": "string",
+                        "example": "유니클로"
+                    },
+                    "title": {
+                        "description": "제목",
+                        "type": "string",
+                        "example": "테스트 제목"
+                    },
+                    "contact_name": {
+                        "description": "담당자 성명",
+                        "type": "string",
+                        "example": "홍길동"
+                    },
+                    "contact_email": {
+                        "description": "담당자 이메일",
+                        "type": "string",
+                        "example": "devtoproduction@gmail.com"
+                    },
+                    "contact_phone": {
+                        "description": "담당자 번호",
+                        "type": "string",
+                        "example": "010-1234-5678"
+                    },
+                    "password": {
+                        "description": "비밀번호",
+                        "type": "string",
+                        "example": "1234"
+                    },
+                    "mapping_categories": {
+                        "description": "카테고리 번호 1: 라벨 인쇄, 2: 디지털 인쇄, 3: 파우치 인쇄, 4: 상담 후 결정",
+                        "type": "string",
+                        "example": "1,2,3"
+                    },
+                    "size": {
+                        "description": "제품 규격",
+                        "type": "string",
+                        "example": "100mm x 100mm x 100mm"
+                    },
+                    "purpose": {
+                        "description": "제품 용도",
+                        "type": "string",
+                        "example": "화장품 부착 라벨"
+                    },
+                    "material": {
+                        "description": "원단 및 코딩 여부",
+                        "type": "string",
+                        "example": "유포지"
+                    },
+                    "shape": {
+                        "description": "가공 형태",
+                        "type": "string",
+                        "example": "롤"
+                    },
+                    "quantity": {
+                        "description": "수량",
+                        "type": "string",
+                        "example": "10만"
+                    },
+                    "desc": {
+                        "description": "기타 문의사항",
+                        "type": "string",
+                        "example": "테스트 기타 사항"
+                    },
+                    "etc_file": {
+                        "description": "파일 5MB 이하",
+                        "type": "file",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
             "BoardEditorCreateSchema": {
                 "description": "에디터 유형 생성 스키마",
                 "required": [
@@ -2597,104 +3132,6 @@
                         "description": "노출 종료일",
                         "type": "string",
                         "example": "2024-07-31"
-                    }
-                },
-                "type": "object"
-            },
-            "BoardBoardCreateSchema": {
-                "description": "게시판 유형 생성 스키마",
-                "required": [
-                    "sub_id",
-                    "company",
-                    "title",
-                    "contact_name",
-                    "contact_email",
-                    "contact_phone",
-                    "password",
-                    "mapping_categories",
-                    "size",
-                    "purpose",
-                    "material",
-                    "shape",
-                    "quantity",
-                    "desc",
-                    "etc_file"
-                ],
-                "properties": {
-                    "sub_id": {
-                        "description": "서브 메뉴 id",
-                        "type": "integer",
-                        "example": 12
-                    },
-                    "company": {
-                        "description": "회사명",
-                        "type": "string",
-                        "example": "유니클로"
-                    },
-                    "title": {
-                        "description": "제목",
-                        "type": "string",
-                        "example": "테스트 제목"
-                    },
-                    "contact_name": {
-                        "description": "담당자 성명",
-                        "type": "string",
-                        "example": "홍길동"
-                    },
-                    "contact_email": {
-                        "description": "담당자 이메일",
-                        "type": "string",
-                        "example": "devtoproduction@gmail.com"
-                    },
-                    "contact_phone": {
-                        "description": "담당자 번호",
-                        "type": "string",
-                        "example": "010-1234-5678"
-                    },
-                    "password": {
-                        "description": "비밀번호",
-                        "type": "string",
-                        "example": "1234"
-                    },
-                    "mapping_categories": {
-                        "description": "카테고리 번호 1: 라벨 인쇄, 2: 디지털 인쇄, 3: 파우치 인쇄, 4: 상담 후 결정",
-                        "type": "string",
-                        "example": "1,2,3"
-                    },
-                    "size": {
-                        "description": "제품 규격",
-                        "type": "string",
-                        "example": "100mm x 100mm x 100mm"
-                    },
-                    "purpose": {
-                        "description": "제품 용도",
-                        "type": "string",
-                        "example": "화장품 부착 라벨"
-                    },
-                    "material": {
-                        "description": "원단 및 코딩 여부",
-                        "type": "string",
-                        "example": "유포지"
-                    },
-                    "shape": {
-                        "description": "가공 형태",
-                        "type": "string",
-                        "example": "롤"
-                    },
-                    "quantity": {
-                        "description": "수량",
-                        "type": "string",
-                        "example": "10만"
-                    },
-                    "desc": {
-                        "description": "기타 문의사항",
-                        "type": "string",
-                        "example": "테스트 기타 사항"
-                    },
-                    "etc_file": {
-                        "description": "파일 5MB 이하",
-                        "type": "file",
-                        "example": ""
                     }
                 },
                 "type": "object"

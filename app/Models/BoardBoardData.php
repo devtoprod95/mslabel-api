@@ -14,4 +14,9 @@ class BoardBoardData extends Model
     protected $table      = 'board_board_datas';
     protected $guarded    = [];
     protected $fillable   = [];
+
+    public function categories()
+    {
+        return $this->belongsToMany(BoardCategoryData::class, 'board_category_mappings', 'board_id', 'category_id');
+    }
 }

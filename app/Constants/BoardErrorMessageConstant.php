@@ -47,6 +47,9 @@ class BoardErrorMessageConstant
     public const ERROR_MESSAGE_SHOW_STARTED_AT    = "show_started_at";
     public const ERROR_MESSAGE_SHOW_ENDED_AT      = "show_ended_at";
     public const ERROR_MESSAGE_IMAGE              = "image";
+    public const ERROR_MESSAGE_PAGE               = "page";
+    public const ERROR_MESSAGE_PAGE_SIZE          = "page_size";
+    public const ERROR_MESSAGE_SORT               = "sort";
     public const ERROR_MESSAGE_MAPPING_CATEGORIES = "mapping_categories";
    
     public static function getErrorMessageNotDefault($constantName): string

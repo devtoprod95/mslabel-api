@@ -2,6 +2,7 @@
 
 namespace App\DTOs\Board;
 
+use App\Constants\BoardConstant;
 use App\DTOs\Dto;
 
 class BoardBoardDto extends Dto
@@ -11,6 +12,7 @@ class BoardBoardDto extends Dto
     protected string $user_id       = "";
     protected string $company       = "";
     protected string $title         = "";
+    protected string $is_reply      = BoardConstant::IS_REPLY_N;
     protected string $contact_name  = "";
     protected string $contact_email = "";
     protected string $contact_phone = "";
@@ -25,12 +27,12 @@ class BoardBoardDto extends Dto
 
     public function bind(mixed $data): void
     {
-        
         $this->group_id      = $data["group_id"];
         $this->sub_id        = $data["sub_id"];
         $this->user_id       = session("admin_user")->sub->user->user_id;
         $this->company       = $data["company"];
         $this->title         = $data["title"];
+        $this->is_reply      = $data["is_reply"];
         $this->contact_name  = $data["contact_name"];
         $this->contact_email = $data["contact_email"];
         $this->contact_phone = $data["contact_phone"];

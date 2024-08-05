@@ -16,6 +16,11 @@ class BoardService
         $this->boardAbstract = $boardAbstract;
     }
 
+    public function list(string $type, Request $request): array
+    {
+        return $this->boardAbstract->list($type, $request);
+    }
+
     public function create(string $type, Request $request): array
     {
         return $this->boardAbstract->create($type, $request);

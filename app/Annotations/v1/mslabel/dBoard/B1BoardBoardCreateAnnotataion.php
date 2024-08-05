@@ -54,7 +54,7 @@ namespace App\Annotations\v1\mslabel\dBoard;
  *         property="mapping_categories",
  *         type="string",
  *         example="1,2,3",
- *         description="카테고리 번호 1: 라벨 인쇄, 2: 디지털 인쇄, 3: 파우치 인쇄, 4: 상담 후 결정"
+ *         description="카테고리 분류 1: 라벨 인쇄, 2: 디지털 인쇄, 3: 파우치 인쇄, 4: 상담 후 결정"
  *     ),
  *     @OA\Property(
  *         property="size",
@@ -136,5 +136,5 @@ namespace App\Annotations\v1\mslabel\dBoard;
  * )
 */
 
-class D1BoardBoardCreateAnnotataion{
+class B1BoardBoardCreateAnnotataion{
 }

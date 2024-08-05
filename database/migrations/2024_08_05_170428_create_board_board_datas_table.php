@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->string('company', 25)->nullable(false)->comment('회사명');
             $table->string('title', 50)->nullable(false)->comment('제목');
+            $table->enum('is_reply', ["Y", "N"])->default("N")->comment('답변 여부');
             $table->string('contact_name', 25)->nullable(false)->comment('담당자 성명');
             $table->string('contact_email', 25)->nullable(false)->comment('담당자 이메일');
             $table->string('contact_phone', 25)->nullable(false)->comment('담당자 번호');

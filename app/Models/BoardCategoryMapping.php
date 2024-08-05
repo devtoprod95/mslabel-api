@@ -14,4 +14,14 @@ class BoardCategoryMapping extends Model
     protected $table      = 'board_category_mappings';
     protected $guarded    = [];
     protected $fillable   = [];
+
+    public function board()
+    {
+        return $this->belongsTo(BoardBoardData::class, 'board_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(BoardCategoryData::class, 'category_id');
+    }
 }

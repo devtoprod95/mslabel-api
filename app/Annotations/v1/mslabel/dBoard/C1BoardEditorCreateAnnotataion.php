@@ -11,7 +11,7 @@ namespace App\Annotations\v1\mslabel\dBoard;
  *     @OA\Property(
  *         property="sub_id",
  *         type="integer",
- *         example=9,
+ *         example=13,
  *         description="서브 메뉴 id"
  *     ),
  *     @OA\Property(

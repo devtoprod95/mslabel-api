@@ -8,8 +8,11 @@ use App\Constants\HttpConstant;
 use App\Constants\MenuConstant;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\BoardService;
+use App\Validators\BoardBoardListValidator;
 use App\Validators\BoardBoardValidator;
+use App\Validators\BoardEditorListValidator;
 use App\Validators\BoardEditorValidator;
+use App\Validators\BoardProductListValidator;
 use App\Validators\BoardProductValidator;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,6 +26,33 @@ class BoardController extends Controller
     {
         $this->request     = $request;
         $this->boardService = $boardService;
+    }
+
+    function list(string $type): JsonResponse
+    {
+        try {
+            if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
+                $validator = new BoardProductListValidator($this->request);
+                $validator->validate();
+            } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
+                $validator = new BoardBoardListValidator($this->request);
+                $validator->validate();
+            } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
+                $validator = new BoardEditorListValidator($this->request);
+                $validator->validate();
+            } else {
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
+            }
+
+            $result = $this->boardService->list($type, $this->request);
+            if( $result["isSuccess"] == true ){
+                return helpers_json_response(HttpConstant::OK, $result);
+            } else {
+                return helpers_json_response(HttpConstant::BAD_REQUEST, [], $result["msg"]);
+            }
+        } catch (Exception $e) {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
+        }
     }
 
     function create(string $type): JsonResponse
