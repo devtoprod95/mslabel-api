@@ -1504,7 +1504,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
+                            "example": 3
                         }
                     },
                     {
@@ -1514,7 +1514,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
+                            "example": 9
                         }
                     },
                     {
@@ -1786,7 +1786,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
+                            "example": 5
                         }
                     },
                     {
@@ -1796,7 +1796,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
+                            "example": 12
                         }
                     },
                     {
@@ -2011,7 +2011,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
+                            "example": 5
                         }
                     },
                     {
@@ -2021,7 +2021,7 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
+                            "example": 13
                         }
                     },
                     {
@@ -2994,7 +2994,7 @@
                         "example": "1234"
                     },
                     "mapping_categories": {
-                        "description": "카테고리 번호 1: 라벨 인쇄, 2: 디지털 인쇄, 3: 파우치 인쇄, 4: 상담 후 결정",
+                        "description": "카테고리 분류 1: 라벨 인쇄, 2: 디지털 인쇄, 3: 파우치 인쇄, 4: 상담 후 결정",
                         "type": "string",
                         "example": "1,2,3"
                     },
@@ -3051,7 +3051,7 @@
                     "sub_id": {
                         "description": "서브 메뉴 id",
                         "type": "integer",
-                        "example": 9
+                        "example": 13
                     },
                     "title": {
                         "description": "제목",
