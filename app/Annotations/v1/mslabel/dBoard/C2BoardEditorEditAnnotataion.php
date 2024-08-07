@@ -53,7 +53,7 @@ namespace App\Annotations\v1\mslabel\dBoard;
  * )
  * 
  * 
- * @OA\Patch(
+ * @OA\Post(
  *     path="/api/v1/admin/board/editor/edit/{id}",
  *     summary="에디터 유형 수정",
  *     description="에디터 유형 수정 endPoint",

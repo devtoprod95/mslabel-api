@@ -29,7 +29,7 @@ namespace App\Annotations\v1\mslabel\cMain;
  * )
  * 
  * 
- * @OA\Patch(
+ * @OA\Post(
  *     path="/api/v1/admin/main/intro2/edit/{id}",
  *     summary="메인 소개2 수정",
  *     description="메인 소개2 수정 endPoint",

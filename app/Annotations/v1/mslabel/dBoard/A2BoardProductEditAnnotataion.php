@@ -95,7 +95,7 @@ namespace App\Annotations\v1\mslabel\dBoard;
  * )
  * 
  * 
- * @OA\Patch(
+ * @OA\Post(
  *     path="/api/v1/admin/board/product/edit/{id}",
  *     summary="상품 유형 수정",
  *     description="상품 유형 수정 endPoint",
