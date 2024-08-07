@@ -695,13 +695,13 @@
             }
         },
         "/api/v1/admin/main/topBanners/edit/{id}": {
-            "patch": {
+            "post": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 상단 배너 수정",
                 "description": "메인 상단 배너 수정 endPoint",
-                "operationId": "7019524236318ac16654011dd2a9646a",
+                "operationId": "8c7f701707561f99e930b0d41c61a95b",
                 "parameters": [
                     {
                         "name": "id",
@@ -1018,13 +1018,13 @@
             }
         },
         "/api/v1/admin/main/intro/edit/{id}": {
-            "patch": {
+            "post": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 소개 수정",
                 "description": "메인 소개 수정 endPoint",
-                "operationId": "5c24ef3dd5ef160f1dc53533e919e7b9",
+                "operationId": "fecad2209fe60ee6281fdb369d2b3d63",
                 "parameters": [
                     {
                         "name": "id",
@@ -1341,13 +1341,13 @@
             }
         },
         "/api/v1/admin/main/intro2/edit/{id}": {
-            "patch": {
+            "post": {
                 "tags": [
                     "메인"
                 ],
                 "summary": "메인 소개2 수정",
                 "description": "메인 소개2 수정 endPoint",
-                "operationId": "b058a0a4e025edba3b60d8d96e2dc1a0",
+                "operationId": "4ffcc4ff5591a1e613033b265679b22a",
                 "parameters": [
                     {
                         "name": "id",
@@ -1694,13 +1694,13 @@
             }
         },
         "/api/v1/admin/board/product/edit/{id}": {
-            "patch": {
+            "post": {
                 "tags": [
                     "게시판"
                 ],
                 "summary": "상품 유형 수정",
                 "description": "상품 유형 수정 endPoint",
-                "operationId": "60ac603adfacf490bc513d94b9599ca9",
+                "operationId": "32479d6d904ecbbeb9cde0b1df6d430f",
                 "parameters": [
                     {
                         "name": "id",
@@ -2201,13 +2201,13 @@
             }
         },
         "/api/v1/admin/board/editor/edit/{id}": {
-            "patch": {
+            "post": {
                 "tags": [
                     "게시판"
                 ],
                 "summary": "에디터 유형 수정",
                 "description": "에디터 유형 수정 endPoint",
-                "operationId": "7e7ad0b9978aefc07c887fcd1cf96e75",
+                "operationId": "832b0e076a4cb684a89c252a9359e7f8",
                 "parameters": [
                     {
                         "name": "id",
