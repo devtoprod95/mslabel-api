@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    abort(404);
+    return response()->noContent(200);
 });
 
 Route::get('/test', function() {
