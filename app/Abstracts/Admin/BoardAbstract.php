@@ -13,6 +13,7 @@ use App\Models\BoardCategoryData;
 use App\Models\BoardCategoryMapping;
 use App\Models\BoardEditorData;
 use App\Models\BoardProductData;
+use App\Models\BoardReplyData;
 use App\Models\NoticeSubData;
 use Carbon\Carbon;
 use Exception;
@@ -116,6 +117,56 @@ abstract class BoardAbstract
             ];
 
             $returnMsg = helpers_success_message($result);
+        } catch (Exception $e) {
+            $returnMsg = helpers_fail_message($e->getMessage());
+        }
+
+        return $returnMsg;
+    }
+
+    /**
+     * @func detail
+     * @description '게시판 상세'
+     * @param string $type
+     * @param int $id
+     * @return array
+     */
+    public function detail(string $type, int $id): array
+    {
+        $returnMsg = $this->returnMsg;
+
+        try {
+            $obj = null;
+
+            if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
+                $obj = BoardProductData::with([
+                    "admin_user"
+                ])->where([
+                   "id" => $id,
+                ])->first();
+            } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
+                $obj = BoardBoardData::with([
+                    "categories",
+                    "admin_user",
+                    "replies.admin_user"
+                ])->where([
+                    "id" => $id,
+                ])->first();
+            } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
+                $obj = BoardEditorData::with([
+                    "admin_user"
+                ])->where([
+                    "id" => $id,
+                ])->first();
+            } else {
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
+            }
+
+            if( $obj == null ){
+                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("BOARD"));
+            }
+
+            $returnMsg = helpers_success_message($obj->toArray());
         } catch (Exception $e) {
             $returnMsg = helpers_fail_message($e->getMessage());
         }
@@ -579,6 +630,38 @@ abstract class BoardAbstract
 
         if( $returnMsg["isSuccess"] === true ){
             deleteLocalFile($boardObj->image);
+        }
+
+        return $returnMsg;
+    }
+
+    public function reply(int $id, Request $request): array
+    {
+        $returnMsg = $this->returnMsg;
+
+        try {
+            $replyType = $request->post('reply_type');
+            $desc      = $request->post('desc');
+
+            $boardObj = BoardBoardData::where("id", $id)->first();
+            if( $boardObj == null ){
+                throw new Exception(BoardErrorMessageConstant::getNotHaveErrorMessage("BOARD"));
+            }
+
+            $insertParam = [
+                'board_id'   => $id,
+                'user_id'    => session("admin_user")->sub->user->user_id,
+                'reply_type' => $replyType,
+                'desc'       => $desc,
+            ];
+            $replyObj = BoardReplyData::create($insertParam);
+            $boardObj->update([
+                "is_reply" => BoardConstant::IS_REPLY_Y
+            ]);
+
+            $returnMsg = helpers_success_message($replyObj->toArray());
+        } catch (Exception $e) {
+            $returnMsg = helpers_fail_message($e->getMessage());
         }
 
         return $returnMsg;

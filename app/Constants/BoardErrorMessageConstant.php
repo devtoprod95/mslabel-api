@@ -51,6 +51,7 @@ class BoardErrorMessageConstant
     public const ERROR_MESSAGE_PAGE_SIZE          = "page_size";
     public const ERROR_MESSAGE_SORT               = "sort";
     public const ERROR_MESSAGE_MAPPING_CATEGORIES = "mapping_categories";
+    public const ERROR_MESSAGE_REPLY_TYPE         = "reply_type";
    
     public static function getErrorMessageNotDefault($constantName): string
     {

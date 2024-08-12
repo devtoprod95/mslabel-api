@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Constants\BoardErrorMessageConstant;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use App\Constants\HttpConstant;
 use App\Constants\MenuConstant;
@@ -45,6 +46,20 @@ class BoardController extends Controller
             }
 
             $result = $this->boardService->list($type, $this->request);
+            if( $result["isSuccess"] == true ){
+                return helpers_json_response(HttpConstant::OK, $result);
+            } else {
+                return helpers_json_response(HttpConstant::BAD_REQUEST, [], $result["msg"]);
+            }
+        } catch (Exception $e) {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
+        }
+    }
+
+    function detail(string $type, int $id): JsonResponse
+    {
+        try {
+            $result = $this->boardService->detail($type, $id);
             if( $result["isSuccess"] == true ){
                 return helpers_json_response(HttpConstant::OK, $result);
             } else {
@@ -99,6 +114,32 @@ class BoardController extends Controller
             }
 
             $result = $this->boardService->edit($type, $id, $this->request);
+            if( $result["isSuccess"] == true ){
+                return helpers_json_response(HttpConstant::OK, $result);
+            } else {
+                return helpers_json_response(HttpConstant::BAD_REQUEST, [], $result["msg"]);
+            }
+        } catch (Exception $e) {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
+        }
+    }
+
+    function reply(int $id): JsonResponse
+    {
+        try {
+            $validator = Validator::make($this->request->all(), [
+                'reply_type' => 'required|int',
+                'desc'       => 'required|string',
+            ], [
+                'reply_type.required' => BoardErrorMessageConstant::getNotHaveErrorMessage("REPLY_TYPE"),
+                'desc.required'       => BoardErrorMessageConstant::getNotHaveErrorMessage("DESC"),
+            ]);
+    
+            if ($validator->fails()) {
+                throw new Exception($validator->errors()->first());
+            }
+
+            $result = $this->boardService->reply($id, $this->request);
             if( $result["isSuccess"] == true ){
                 return helpers_json_response(HttpConstant::OK, $result);
             } else {

@@ -91,11 +91,16 @@ Route::name('v1.')->prefix('v1')->group(function () {
                 Route::name('{type}.')->prefix('{type}')->group(function () {
                     /** 게시판 리스트 */
                     Route::get("", [BoardController::class, "list"])->name("list");
+                    /** 게시판 상세 */
+                    Route::get("/{id}", [BoardController::class, "detail"])->name("detail");
                     /** 게시판 생성 */
                     Route::post("/create", [BoardController::class, "create"])->name("create");
                     /** 게시판 수정 */
                     Route::post("/edit/{id}", [BoardController::class, "edit"])->name("edit");
                 });
+
+                /** 게시판 유형 답변 등록 */
+                Route::post("/reply/{id}", [BoardController::class, "reply"])->name("reply");
             });
         });
     });

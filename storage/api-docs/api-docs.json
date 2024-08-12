@@ -1995,6 +1995,85 @@
                 ]
             }
         },
+        "/api/v1/admin/board/reply/{id}": {
+            "post": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "게시판 유형 답글 등록",
+                "description": "게시판 유형 답글 등록 endPoint",
+                "operationId": "a8d6b8b516267ee494e886da32891c42",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "게시판 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BoardReplyCreateSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/admin/board/editor": {
             "get": {
                 "tags": [
@@ -2228,6 +2307,85 @@
                         }
                     }
                 },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/admin/board/{type}/{id}": {
+            "get": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "게시판 상세 조회",
+                "description": "게시판 상세 조회 endPoint",
+                "operationId": "1620ad0ba712bb2c737f2486c100ea19",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "게시판 유형 image: 이미지, product: 상품, board: 게시판, editor: 에디터",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "product"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "게시판 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -3032,6 +3190,26 @@
                         "description": "파일 5MB 이하",
                         "type": "file",
                         "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "BoardReplyCreateSchema": {
+                "description": "에디터 유형 생성 스키마",
+                "required": [
+                    "reply_type",
+                    "desc"
+                ],
+                "properties": {
+                    "reply_type": {
+                        "description": "답변 유형",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "desc": {
+                        "description": "내용",
+                        "type": "string",
+                        "example": "별도의 후가공 없이도 처리가 되어보이는..."
                     }
                 },
                 "type": "object"

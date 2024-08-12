@@ -14,4 +14,9 @@ class BoardEditorData extends Model
     protected $table      = 'board_editor_datas';
     protected $guarded    = [];
     protected $fillable   = [];
+
+    public function admin_user()
+    {
+        return $this->hasOne(AdminData::class, "user_id", "user_id");
+    }
 }
