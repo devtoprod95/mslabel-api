@@ -41,7 +41,7 @@ abstract class BoardAbstract
 
         try {
             $groupId    = $request->get("group_id");
-            $subId      = $request->get("sub_id");
+            $subIds     = explode(",", $request->get("sub_id"));
             $isShow     = $request->get("is_show", "");
             $searchCls  = $request->get("search_cls", "");
             $keyword    = $request->get("keyword", "");
@@ -56,7 +56,6 @@ abstract class BoardAbstract
             if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
                 $builder = BoardProductData::where([
                     "group_id" => $groupId,
-                    "sub_id"   => $subId,
                 ]);
 
                 if( !empty($isShow) ){
@@ -65,7 +64,6 @@ abstract class BoardAbstract
             } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
                 $builder = BoardBoardData::with(["categories"])->where([
                     "group_id" => $groupId,
-                    "sub_id"   => $subId,
                 ]);
 
                 if( !empty($isReply) ){
@@ -83,7 +81,6 @@ abstract class BoardAbstract
             } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
                 $builder = BoardEditorData::where([
                     "group_id" => $groupId,
-                    "sub_id"   => $subId,
                 ]);
 
                 if( !empty($isShow) ){
@@ -92,6 +89,8 @@ abstract class BoardAbstract
             } else {
                 throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
             }
+
+            $builder->whereIn("sub_id", $subIds);
 
             if( !empty($keyword) ){
                 if( $searchCls == "title"){

@@ -20,7 +20,7 @@ class BoardProductListValidator
     {
         $validator = Validator::make($this->request->all(), [
             'group_id'  => 'required|int',
-            'sub_id'    => 'required|int',
+            'sub_id'    => 'required|string',
             'page'      => 'required|int',
             'page_size' => 'required|int',
             'sort'      => 'required|string',

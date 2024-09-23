@@ -24,10 +24,10 @@ namespace App\Annotations\v1\mslabel\dBoard;
  *         name="sub_id",
  *         in="query",
  *         required=true,
- *         description="서브 메뉴 ID",
+ *         description="서브 메뉴 ID (여러 개 검색 필요 시 ,콤마로 구분 9,12,13)",
  *         @OA\Schema(
- *             type="integer",
- *             example=9
+ *             type="string",
+ *             example="9"
  *         )
  *     ),
  *     @OA\Parameter(

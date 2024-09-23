@@ -1510,11 +1510,11 @@
                     {
                         "name": "sub_id",
                         "in": "query",
-                        "description": "서브 메뉴 ID",
+                        "description": "서브 메뉴 ID (여러 개 검색 필요 시 ,콤마로 구분 9,12,13)",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "example": 9
+                            "type": "string",
+                            "example": "9"
                         }
                     },
                     {
@@ -1792,11 +1792,11 @@
                     {
                         "name": "sub_id",
                         "in": "query",
-                        "description": "서브 메뉴 ID",
+                        "description": "서브 메뉴 ID (여러 개 검색 필요 시 ,콤마로 구분 9,12,13)",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "example": 12
+                            "type": "string",
+                            "example": "12"
                         }
                     },
                     {
@@ -2096,11 +2096,11 @@
                     {
                         "name": "sub_id",
                         "in": "query",
-                        "description": "서브 메뉴 ID",
+                        "description": "서브 메뉴 ID (여러 개 검색 필요 시 ,콤마로 구분 9,12,13)",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "example": 13
+                            "type": "string",
+                            "example": "13"
                         }
                     },
                     {
