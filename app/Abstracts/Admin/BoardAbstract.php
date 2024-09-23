@@ -666,4 +666,40 @@ abstract class BoardAbstract
 
         return $returnMsg;
     }
+
+    /**
+     * @func delete
+     * @description '게시판 삭제'
+     * @param string $type
+     * @param int $id
+     * @return array
+     */
+    public function delete(string $type, int $id): array
+    {
+        $returnMsg = $this->returnMsg;
+
+        try {
+            if( $type == MenuConstant::SUB_TYPE_PRODUCT ){
+                BoardProductData::where([
+                   "id" => $id,
+                ])->delete();
+            } else if( $type == MenuConstant::SUB_TYPE_BOARD ){
+                BoardBoardData::where([
+                    "id" => $id,
+                ])->delete();
+            } else if( $type == MenuConstant::SUB_TYPE_EDITOR ){
+                BoardEditorData::where([
+                    "id" => $id,
+                ])->delete();
+            } else {
+                throw new Exception(BoardErrorMessageConstant::getFitErrorMessage("TYPE"));
+            }
+
+            $returnMsg = helpers_success_message();
+        } catch (Exception $e) {
+            $returnMsg = helpers_fail_message($e->getMessage());
+        }
+
+        return $returnMsg;
+    }
 }

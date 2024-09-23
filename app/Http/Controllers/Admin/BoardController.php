@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use App\Constants\HttpConstant;
 use App\Constants\MenuConstant;
+use App\Constants\MenuErrorMessageConstant;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\BoardService;
 use App\Validators\BoardBoardListValidator;
@@ -140,6 +141,24 @@ class BoardController extends Controller
             }
 
             $result = $this->boardService->reply($id, $this->request);
+            if( $result["isSuccess"] == true ){
+                return helpers_json_response(HttpConstant::OK, $result);
+            } else {
+                return helpers_json_response(HttpConstant::BAD_REQUEST, [], $result["msg"]);
+            }
+        } catch (Exception $e) {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
+        }
+    }
+
+    function delete(string $type, int $id): JsonResponse
+    {
+        try {
+            if( !in_array($type, MenuConstant::SUB_TYPE_LIST) ){
+                throw new Exception(MenuErrorMessageConstant::getFitErrorMessage("SUB_TYPE"));
+            }
+
+            $result = $this->boardService->delete($type, $id);
             if( $result["isSuccess"] == true ){
                 return helpers_json_response(HttpConstant::OK, $result);
             } else {

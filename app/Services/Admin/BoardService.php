@@ -40,4 +40,9 @@ class BoardService
     {
         return $this->boardAbstract->reply($id, $request);
     }
+
+    public function delete(string $type, int $id): array
+    {
+        return $this->boardAbstract->delete($type, $id);
+    }
 }

@@ -97,6 +97,8 @@ Route::name('v1.')->prefix('v1')->group(function () {
                     Route::post("/create", [BoardController::class, "create"])->name("create");
                     /** 게시판 수정 */
                     Route::post("/edit/{id}", [BoardController::class, "edit"])->name("edit");
+                    /** 게시판 삭제 */
+                    Route::delete("/delete/{id}", [BoardController::class, "delete"])->name("delete");
                 });
 
                 /** 게시판 유형 답변 등록 */

@@ -2434,6 +2434,85 @@
                     }
                 ]
             }
+        },
+        "/api/v1/admin/board/{type}/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "게시판"
+                ],
+                "summary": "게시판 삭제",
+                "description": "게시판 삭제 endPoint",
+                "operationId": "b214ce08c0fda7f7ef3d85d4f130e492",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "게시판 유형 image: 이미지, product: 상품, board: 게시판, editor: 에디터",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "product"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "게시판 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authorization Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/400ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/500ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
