@@ -107,3 +107,5 @@ Route::name('v1.')->prefix('v1')->group(function () {
         });
     });
 });
+
+Route::prefix("1to50")->name("1to50.")->group(base_path("routes/1to50.php"));
