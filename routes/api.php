@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BoardController;
 use App\Http\Controllers\Admin\MainController as AdminMainController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SmsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('v1.')->prefix('v1')->group(function () {
     Route::post('/token/create', [AuthController::class, 'tokenCreate'])->name('token.create');
+
+    Route::post('/sms/login', [SmsController::class, 'login'])->name('sms.login');
 
     Route::middleware(['jwt.verify'])->group(function () {
 

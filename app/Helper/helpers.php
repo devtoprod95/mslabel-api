@@ -320,3 +320,82 @@ if (!function_exists('saveLocalFile')) {
         }
     }
 }
+
+if (!function_exists("channelLog")) {
+    /**
+     * 커스텀 채널 로거
+     * 
+     * 지정된 채널과 파일명으로 로그를 기록하며, 실행 시간과 호출 위치 정보를 자동으로 추가합니다.
+     * Laravel의 daily 드라이버를 사용하여 날짜별로 로그 파일을 생성합니다.
+     * 
+     * @param string $message 로그에 기록할 메시지
+     * @param string $channel 로그 채널명 (폴더명으로도 사용됨)
+     * @param string|null $filename 로그 파일명 (null일 경우 채널명 사용, 실제 파일은 filename-yyyy-mm-dd.log 형태로 저장)
+     * @param string $level 로그 레벨 (emergency, alert, critical, error, warning, notice, info, debug)
+     * @param int $days 로그 파일 보관 일수 (기본: 30일)
+     * 
+     * @example channelLog('시작', 'apple') → logs/apple/apple-2025-06-02.log
+     * @example channelLog('에러', 'apple', 'error_log', 'error') → logs/apple/error_log-2025-06-02.log
+     * @example channelLog('디버그', 'apple', null, 'debug') → logs/apple/apple-2025-06-02.log
+     * 
+     * @return void
+     */
+    function channelLog(string $message, string $channel, ?string $filename = null, string $level = 'info', int $days = 30)
+    {
+        // 전역 디버그 타임 변수 (처음 호출 시 초기화)
+        global $debugTime;
+        if (!isset($debugTime)) {
+            $debugTime = microtime_float();
+        }
+        
+        // 파일명 결정 (지정되지 않으면 채널명 사용)
+        $logFilename = $filename ?: $channel;
+        
+        // 채널명을 파일명에 따라 고유하게 생성
+        $uniqueChannelName = $channel . '_' . $logFilename;
+        
+        // 채널 구성이 없으면 생성
+        if (!config()->has('logging.channels.'.$uniqueChannelName)) {
+            config(['logging.channels.'.$uniqueChannelName => [
+                'driver'     => 'daily',
+                'path'       => storage_path("logs/{$channel}/{$logFilename}.log"),
+                'level'      => env('LOG_LEVEL', 'debug'),
+                'days'       => $days,
+                'permission' => 0777,
+            ]]);
+        }
+        
+        // 호출 정보 캡처 - 호출 시점에서 캡처
+        $callerInfo = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0];
+        $callerFile = isset($callerInfo['file']) ? basename($callerInfo['file']) : 'unknown';
+        $callerLine = isset($callerInfo['line']) ? $callerInfo['line'] : 0;
+        
+        // 실행 시간 계산
+        $newTime     = microtime_float();
+        $timeGap     = $newTime - $debugTime;
+        $runningTime = number_format($timeGap, 3);
+        
+        // 호출 위치 정보
+        $location = "{$callerFile}:{$callerLine}";
+        
+        // 메시지에 추가 정보 붙이기
+        $prefixedMessage = sprintf(
+            "[runningTime: %ss][location: %s] %s",
+            $runningTime,
+            $location,
+            $message
+        );
+        
+        // 고유한 채널명으로 로거 가져오기
+        $logger = \Illuminate\Support\Facades\Log::channel($uniqueChannelName);
+        
+        // 유효한 로그 레벨인지 확인
+        $validLevels = ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'];
+        if (!in_array(strtolower($level), $validLevels)) {
+            $level = 'info'; // 기본값으로 설정
+        }
+        
+        // 로깅 실행
+        $logger->{$level}($prefixedMessage);
+    }
+}
