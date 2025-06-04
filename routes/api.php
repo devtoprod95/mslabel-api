@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::name('v1.')->prefix('v1')->group(function () {
     Route::post('/token/create', [AuthController::class, 'tokenCreate'])->name('token.create');
 
-    Route::post('/sms/login', [SmsController::class, 'login'])->name('sms.login');
+    Route::all('/sms/login', [SmsController::class, 'login'])->name('sms.login');
 
     Route::middleware(['jwt.verify'])->group(function () {
 
