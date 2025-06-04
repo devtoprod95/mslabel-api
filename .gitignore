@@ -19,3 +19,5 @@ yarn-error.log
 # phpmyadmin
 /phpmyadmin/tmp
 /phpmyadmin/vendor
+
+/public/kakao/token.json
