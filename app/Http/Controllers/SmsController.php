@@ -20,12 +20,12 @@ class SmsController extends Controller
 
     public function login()
     {
-        $userType   = $this->request->input('userType');
-        $userName   = $this->request->input('userName');
-        $sourceIP   = $this->request->input('sourceIP');
-        $eventTime  = $this->request->input('eventTime');
-        $mfaUsed    = $this->request->input('mfaUsed');
-        $region     = $this->request->input('region');
+        $userType   = $this->request->input('userType', 'test');
+        $userName   = $this->request->input('userName', 'test');
+        $sourceIP   = $this->request->input('sourceIP', 'test');
+        $eventTime  = $this->request->input('eventTime', '2025-06-04T05:17:08Z');
+        $mfaUsed    = $this->request->input('mfaUsed', 'test');
+        $region     = $this->request->input('region', 'test');
         $koreanTime = Carbon::parse($eventTime)->setTimezone('Asia/Seoul')->format('Y-m-d H:i:s');
 
         try {
@@ -34,7 +34,7 @@ class SmsController extends Controller
             // $t1 = $kakao->getAuthUrl();
             // $t1 = $kakao->getAccessToken();
             $msg  = "🔔 AWS 로그인 알림\n";
-            $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+            $msg .= "━━━━━━━━━━━━\n";
             $msg .= "👤 사용자: " . $userName . "\n";
             $msg .= "🔑 유형: " . $userType . "\n";
             $msg .= "🌐 IP: " . $sourceIP . "\n";
