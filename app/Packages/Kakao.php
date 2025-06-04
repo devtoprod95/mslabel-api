@@ -19,6 +19,7 @@ class Kakao
     {
         $this->restApiKey  = env('KAKAO_REST_API_KEY');
         $this->redirectUri = url('/api/v1/kakao/callback');
+        // $this->redirectUri = 'http://3.38.197.138:8090/api/v1/kakao/callback';
         if( $this->restApiKey == null ){
             throw new Exception("KAKAO_REST_API_KEY 없음");
         }
@@ -51,7 +52,6 @@ class Kakao
         ]);
 
         $data = json_decode($response->getBody(), true);
-
         if (isset($data['access_token'])) {
             $this->accessToken = $data['access_token'];
 
@@ -134,11 +134,6 @@ class Kakao
         File::put($filePath, json_encode($tokenData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 
-    public function sendMessage(string $message): void
-    {
-        $this->sendMemoToMe($message);
-    }
-
     public function getFriends(): array
     {
         $headers = [
@@ -152,13 +147,11 @@ class Kakao
         ]);
     
         $data = json_decode($response->getBody(), true);
-        dd($data);
-       
 
-        return [];
+        return $data;
     }
 
-    public function sendMemoToMe($message): bool 
+    public function sendMessageToMe($message): bool 
     {
         $headers = [
             'Authorization' => 'Bearer ' . $this->accessToken,
@@ -189,14 +182,14 @@ class Kakao
         return true;
     }
 
-    public function sendMemoToFriends($message): bool 
+    public function sendMessageFriends($message): bool 
     {
         $headers = [
             'Authorization' => 'Bearer ' . $this->accessToken,
             'Content-Type' => 'application/x-www-form-urlencoded'
         ];
 
-        $friendUuid = [];
+        $friendUuid = explode(',', env('KAKAO_UUID'));
         
         $templateObject = [
             'object_type'    => 'text',
@@ -207,15 +200,16 @@ class Kakao
             ]
         ];
         
-        $response = $this->client->post('https://kapi.kakao.com/v2/api/talk/friends/message/default/send', [
+        $response = $this->client->post('https://kapi.kakao.com/v1/api/talk/friends/message/default/send', [
             'headers' => $headers,
             'form_params' => [
-                'receiver_uuids'  => json_encode([$friendUuid]),
+                'receiver_uuids'  => json_encode($friendUuid),
                 'template_object' => json_encode($templateObject, JSON_UNESCAPED_UNICODE)
             ]
         ]);
 
         $data = json_decode($response->getBody(), true);
+
         if( !isset($data['result_code']) || $data['result_code'] !== 0 ){
             return false;
         }
