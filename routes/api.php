@@ -22,6 +22,7 @@ Route::name('v1.')->prefix('v1')->group(function () {
     Route::post('/token/create', [AuthController::class, 'tokenCreate'])->name('token.create');
 
     Route::any('/sms/login', [SmsController::class, 'login'])->name('sms.login');
+    Route::any('/kakao/callback', [SmsController::class, 'kakaoCallback'])->name('kakao.callback');
 
     Route::middleware(['jwt.verify'])->group(function () {
 
