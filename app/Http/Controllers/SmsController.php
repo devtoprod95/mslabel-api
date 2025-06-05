@@ -34,7 +34,7 @@ class SmsController extends Controller
             // $t1 = $kakao->getAuthUrl();
             // $t1 = $kakao->getAccessToken();
             $msg  = "🔔 AWS 로그인 알림\n";
-            $msg .= "━━━━━━━━━━━━\n";
+            $msg .= "━━━━━━━━━━━━━━━\n";
             $msg .= "👤 사용자: " . $userName . "\n";
             $msg .= "🔑 유형: " . $userType . "\n";
             $msg .= "🌐 IP: " . $sourceIP . "\n";

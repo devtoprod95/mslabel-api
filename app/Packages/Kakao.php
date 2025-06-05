@@ -100,7 +100,10 @@ class Kakao
 
     private function refreshAccessToken(string $refreshToken): void
     {
-        $data = [
+        $tokenFile = public_path('kakao/token.json');
+        $tokenData = json_decode(file_get_contents($tokenFile), true);
+
+        $data      = [
             'grant_type'    => 'refresh_token',
             'client_id'     => $this->restApiKey,
             'refresh_token' => $refreshToken
@@ -110,19 +113,28 @@ class Kakao
         ]);
 
         $data = json_decode($response->getBody(), true);
-        
+
         if (isset($data['access_token'])) {
             $this->accessToken = $data['access_token'];
+            $saveData          = $data;
+            $saveData['scope'] = $tokenData['scope'];
 
-            $now                 = Carbon::now();
-            $accessTokenExpires  = $now->copy()->addSeconds($data['expires_in']);
-            $refreshTokenExpires = $now->copy()->addSeconds($data['refresh_token_expires_in']);
+            $now                = Carbon::now();
+            $accessTokenExpires = $now->copy()->addSeconds($data['expires_in']);
+
+            if( !empty($data['refresh_token']) && !empty($data['refresh_token_expires_in']) ){
+                $saveData['refresh_token']            = $data['refresh_token'];
+                $refreshTokenExpires                  = $now->copy()->addSeconds($data['refresh_token_expires_in']);
+                $saveData['refresh_token_expires_at'] = $refreshTokenExpires->format('Y-m-d H:i:s');
+            } else {
+                $saveData['refresh_token']            = $tokenData['refresh_token'];
+                $saveData['refresh_token_expires_at'] = $tokenData['refresh_token_expires_at'];
+            }
             
-            $data['access_token_expires_at']  = $accessTokenExpires->format('Y-m-d H:i:s');
-            $data['refresh_token_expires_at'] = $refreshTokenExpires->format('Y-m-d H:i:s');
-            $data['created_at']               = $now->format('Y-m-d H:i:s');
+            $saveData['access_token_expires_at'] = $accessTokenExpires->format('Y-m-d H:i:s');
+            $saveData['created_at']              = $now->format('Y-m-d H:i:s');
             
-            $this->saveTokenToFile($data);
+            $this->saveTokenToFile($saveData);
         } else {
             throw new Exception('리프레쉬 토큰 발급 실패');
         }
@@ -198,12 +210,13 @@ class Kakao
                 'web_url'        => '',
                 'mobile_web_url' => ''
             ]
-        ];
-        
+        ];        
+        $receiver_uuids = json_encode($friendUuid);
+
         $response = $this->client->post('https://kapi.kakao.com/v1/api/talk/friends/message/default/send', [
             'headers' => $headers,
             'form_params' => [
-                'receiver_uuids'  => json_encode($friendUuid),
+                'receiver_uuids'  => $receiver_uuids,
                 'template_object' => json_encode($templateObject, JSON_UNESCAPED_UNICODE)
             ]
         ]);
