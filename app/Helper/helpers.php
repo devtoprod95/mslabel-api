@@ -328,7 +328,7 @@ if (!function_exists("channelLog")) {
      * 지정된 채널과 파일명으로 로그를 기록하며, 실행 시간과 호출 위치 정보를 자동으로 추가합니다.
      * Laravel의 daily 드라이버를 사용하여 날짜별로 로그 파일을 생성합니다.
      * 
-     * @param Throwable $message 로그 인스턴스
+     * @param Throwable|string $message 로그 인스턴스
      * @param string $channel 로그 채널명 (폴더명으로도 사용됨)
      * @param string|null $filename 로그 파일명 (null일 경우 채널명 사용, 실제 파일은 filename-yyyy-mm-dd.log 형태로 저장)
      * @param string $level 로그 레벨 (emergency, alert, critical, error, warning, notice, info, debug)
@@ -340,7 +340,7 @@ if (!function_exists("channelLog")) {
      * 
      * @return void
      */
-    function channelLog(Throwable $message, string $channel, ?string $filename = null, string $level = 'info', int $days = 30)
+    function channelLog(Throwable|string $message, string $channel, ?string $filename = null, string $level = 'info', int $days = 30)
     {
         // 전역 디버그 타임 변수 (처음 호출 시 초기화)
         global $debugTime;
