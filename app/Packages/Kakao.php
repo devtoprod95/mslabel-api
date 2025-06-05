@@ -72,7 +72,7 @@ class Kakao
     private function loadToken(): void
     {
         $tokenFile = public_path('kakao/token.json');
-        
+
         if (file_exists($tokenFile)) {
             $tokenData = json_decode(file_get_contents($tokenFile), true);
             
@@ -91,7 +91,7 @@ class Kakao
                     $this->accessToken = $tokenData['access_token'];
                 }
             } else {
-                throw new Exception('empty $tokenData');    
+                throw new Exception('empty $tokenData');
             }
         } else {
             throw new Exception('empty 토큰 파일');

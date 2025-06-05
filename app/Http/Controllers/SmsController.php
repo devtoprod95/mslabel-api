@@ -44,7 +44,7 @@ class SmsController extends Controller
 
             $kakao->sendMessageFriends($msg);
         } catch (Exception $th) {
-            channelLog($th->getMessage(), 'kakao', '', 'error');
+            channelLog($th, 'kakao', '', 'error');
         }
 
         return helpers_json_response(HttpConstant::OK);

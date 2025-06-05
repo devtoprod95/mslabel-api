@@ -328,7 +328,7 @@ if (!function_exists("channelLog")) {
      * 지정된 채널과 파일명으로 로그를 기록하며, 실행 시간과 호출 위치 정보를 자동으로 추가합니다.
      * Laravel의 daily 드라이버를 사용하여 날짜별로 로그 파일을 생성합니다.
      * 
-     * @param string $message 로그에 기록할 메시지
+     * @param Throwable $message 로그 인스턴스
      * @param string $channel 로그 채널명 (폴더명으로도 사용됨)
      * @param string|null $filename 로그 파일명 (null일 경우 채널명 사용, 실제 파일은 filename-yyyy-mm-dd.log 형태로 저장)
      * @param string $level 로그 레벨 (emergency, alert, critical, error, warning, notice, info, debug)
@@ -340,7 +340,7 @@ if (!function_exists("channelLog")) {
      * 
      * @return void
      */
-    function channelLog(string $message, string $channel, ?string $filename = null, string $level = 'info', int $days = 30)
+    function channelLog(Throwable $message, string $channel, ?string $filename = null, string $level = 'info', int $days = 30)
     {
         // 전역 디버그 타임 변수 (처음 호출 시 초기화)
         global $debugTime;
@@ -365,25 +365,32 @@ if (!function_exists("channelLog")) {
             ]]);
         }
         
-        // 호출 정보 캡처 - 호출 시점에서 캡처
-        $callerInfo = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0];
-        $callerFile = isset($callerInfo['file']) ? basename($callerInfo['file']) : 'unknown';
-        $callerLine = isset($callerInfo['line']) ? $callerInfo['line'] : 0;
-        
         // 실행 시간 계산
         $newTime     = microtime_float();
         $timeGap     = $newTime - $debugTime;
         $runningTime = number_format($timeGap, 3);
         
-        // 호출 위치 정보
-        $location = "{$callerFile}:{$callerLine}";
+        // Exception 객체인지 확인해서 위치 정보 추출
+        if ($message instanceof Throwable) {
+            // Exception 객체인 경우 실제 에러 발생 위치 사용
+            $runFile     = basename($message->getFile());
+            $location    = "{$runFile}:{$message->getLine()}";
+            $messageText = $message->getMessage();
+        } else {
+            // 일반 문자열인 경우 호출한 위치 사용
+            $backtrace   = debug_backtrace();
+            $caller      = $backtrace[0];
+            $runFile     = basename($caller['file']);
+            $location    = "{$runFile}:{$caller['line']}";
+            $messageText = $message;
+        }
         
         // 메시지에 추가 정보 붙이기
         $prefixedMessage = sprintf(
             "[runningTime: %ss][location: %s] %s",
             $runningTime,
             $location,
-            $message
+            $messageText
         );
         
         // 고유한 채널명으로 로거 가져오기
